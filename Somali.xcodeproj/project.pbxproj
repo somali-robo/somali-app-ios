@@ -1,0 +1,473 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		450B37B61DD2E9AC0092A3ED /* DeviceTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B37B51DD2E9AC0092A3ED /* DeviceTableCell.swift */; };
+		450B37B81DD30AAE0092A3ED /* Chatroom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B37B71DD30AAE0092A3ED /* Chatroom.swift */; };
+		450B37BA1DD30C550092A3ED /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B37B91DD30C550092A3ED /* Member.swift */; };
+		450B37BC1DD312A40092A3ED /* ChatroomTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B37BB1DD312A40092A3ED /* ChatroomTableCell.swift */; };
+		451363781DD5718E00398920 /* Intonation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451363771DD5718E00398920 /* Intonation.swift */; };
+		4526FDAA1DC64D0C005F2DFA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4526FDA91DC64D0C005F2DFA /* AppDelegate.swift */; };
+		4526FDAF1DC64D0C005F2DFA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4526FDAD1DC64D0C005F2DFA /* Main.storyboard */; };
+		4526FDB11DC64D0C005F2DFA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4526FDB01DC64D0C005F2DFA /* Assets.xcassets */; };
+		4526FDB41DC64D0C005F2DFA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4526FDB21DC64D0C005F2DFA /* LaunchScreen.storyboard */; };
+		45B394B51DD170D2001E75A2 /* DeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B394B41DD170D2001E75A2 /* DeviceViewController.swift */; };
+		45B394B71DD17137001E75A2 /* ChatroomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B394B61DD17137001E75A2 /* ChatroomViewController.swift */; };
+		45B394B91DD1715B001E75A2 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B394B81DD1715B001E75A2 /* ChatViewController.swift */; };
+		45B394DE1DD19C20001E75A2 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B394DD1DD19C20001E75A2 /* Message.swift */; };
+		45B394E11DD19C75001E75A2 /* SomaliDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B394DF1DD19C75001E75A2 /* SomaliDB.swift */; };
+		45B394E21DD19C75001E75A2 /* SomaliSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B394E01DD19C75001E75A2 /* SomaliSocket.swift */; };
+		45B394E41DD19C7E001E75A2 /* CommonUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B394E31DD19C7E001E75A2 /* CommonUtil.swift */; };
+		45B394E61DD19D32001E75A2 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B394E51DD19D32001E75A2 /* Device.swift */; };
+		45B394E81DD1A128001E75A2 /* Owner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B394E71DD1A128001E75A2 /* Owner.swift */; };
+		45B394EA1DD1A176001E75A2 /* ServiceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B394E91DD1A176001E75A2 /* ServiceInfo.swift */; };
+		45B4998B1DE6D75B0038D9D3 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B4998A1DE6D75B0038D9D3 /* Config.swift */; };
+		C7231608F12299705A8C3213 /* Pods_Somali.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DA5F5D45DC5B1971D2F26F2 /* Pods_Somali.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		450B37B51DD2E9AC0092A3ED /* DeviceTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceTableCell.swift; sourceTree = "<group>"; };
+		450B37B71DD30AAE0092A3ED /* Chatroom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chatroom.swift; sourceTree = "<group>"; };
+		450B37B91DD30C550092A3ED /* Member.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
+		450B37BB1DD312A40092A3ED /* ChatroomTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatroomTableCell.swift; sourceTree = "<group>"; };
+		451363771DD5718E00398920 /* Intonation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Intonation.swift; sourceTree = "<group>"; };
+		4526FDA61DC64D0C005F2DFA /* Somali.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Somali.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4526FDA91DC64D0C005F2DFA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		4526FDAE1DC64D0C005F2DFA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		4526FDB01DC64D0C005F2DFA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4526FDB31DC64D0C005F2DFA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		4526FDB51DC64D0C005F2DFA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4526FDC21DC6509F005F2DFA /* Somali-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Somali-Bridging-Header.h"; sourceTree = "<group>"; };
+		45B394B41DD170D2001E75A2 /* DeviceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceViewController.swift; sourceTree = "<group>"; };
+		45B394B61DD17137001E75A2 /* ChatroomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatroomViewController.swift; sourceTree = "<group>"; };
+		45B394B81DD1715B001E75A2 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		45B394DD1DD19C20001E75A2 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		45B394DF1DD19C75001E75A2 /* SomaliDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SomaliDB.swift; sourceTree = "<group>"; };
+		45B394E01DD19C75001E75A2 /* SomaliSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SomaliSocket.swift; sourceTree = "<group>"; };
+		45B394E31DD19C7E001E75A2 /* CommonUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonUtil.swift; sourceTree = "<group>"; };
+		45B394E51DD19D32001E75A2 /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
+		45B394E71DD1A128001E75A2 /* Owner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Owner.swift; sourceTree = "<group>"; };
+		45B394E91DD1A176001E75A2 /* ServiceInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceInfo.swift; sourceTree = "<group>"; };
+		45B4998A1DE6D75B0038D9D3 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		6DA5F5D45DC5B1971D2F26F2 /* Pods_Somali.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Somali.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F0C189F68851955E23A84F8 /* Pods-Somali.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Somali.release.xcconfig"; path = "Pods/Target Support Files/Pods-Somali/Pods-Somali.release.xcconfig"; sourceTree = "<group>"; };
+		AF994B0F38D8D278D1A3E1BD /* Pods-Somali.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Somali.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Somali/Pods-Somali.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4526FDA31DC64D0C005F2DFA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C7231608F12299705A8C3213 /* Pods_Somali.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3473B43229153DC98634AF88 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				AF994B0F38D8D278D1A3E1BD /* Pods-Somali.debug.xcconfig */,
+				7F0C189F68851955E23A84F8 /* Pods-Somali.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		4526FD9D1DC64D0C005F2DFA = {
+			isa = PBXGroup;
+			children = (
+				4526FDA81DC64D0C005F2DFA /* Somali */,
+				4526FDA71DC64D0C005F2DFA /* Products */,
+				3473B43229153DC98634AF88 /* Pods */,
+				D2E133C1AE3EE2562225D846 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		4526FDA71DC64D0C005F2DFA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4526FDA61DC64D0C005F2DFA /* Somali.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4526FDA81DC64D0C005F2DFA /* Somali */ = {
+			isa = PBXGroup;
+			children = (
+				45B394DB1DD19BEA001E75A2 /* extra */,
+				4526FDA91DC64D0C005F2DFA /* AppDelegate.swift */,
+				4526FDAD1DC64D0C005F2DFA /* Main.storyboard */,
+				4526FDB01DC64D0C005F2DFA /* Assets.xcassets */,
+				4526FDB21DC64D0C005F2DFA /* LaunchScreen.storyboard */,
+				45B394B41DD170D2001E75A2 /* DeviceViewController.swift */,
+				450B37B51DD2E9AC0092A3ED /* DeviceTableCell.swift */,
+				45B394B61DD17137001E75A2 /* ChatroomViewController.swift */,
+				450B37BB1DD312A40092A3ED /* ChatroomTableCell.swift */,
+				45B394B81DD1715B001E75A2 /* ChatViewController.swift */,
+				4526FDB51DC64D0C005F2DFA /* Info.plist */,
+				4526FDC21DC6509F005F2DFA /* Somali-Bridging-Header.h */,
+				45B4998A1DE6D75B0038D9D3 /* Config.swift */,
+			);
+			path = Somali;
+			sourceTree = "<group>";
+		};
+		45B394DB1DD19BEA001E75A2 /* extra */ = {
+			isa = PBXGroup;
+			children = (
+				45B394E31DD19C7E001E75A2 /* CommonUtil.swift */,
+				45B394E01DD19C75001E75A2 /* SomaliSocket.swift */,
+				45B394DF1DD19C75001E75A2 /* SomaliDB.swift */,
+				45B394DC1DD19C20001E75A2 /* db */,
+			);
+			path = extra;
+			sourceTree = "<group>";
+		};
+		45B394DC1DD19C20001E75A2 /* db */ = {
+			isa = PBXGroup;
+			children = (
+				45B394DD1DD19C20001E75A2 /* Message.swift */,
+				45B394E51DD19D32001E75A2 /* Device.swift */,
+				45B394E71DD1A128001E75A2 /* Owner.swift */,
+				45B394E91DD1A176001E75A2 /* ServiceInfo.swift */,
+				450B37B71DD30AAE0092A3ED /* Chatroom.swift */,
+				450B37B91DD30C550092A3ED /* Member.swift */,
+				451363771DD5718E00398920 /* Intonation.swift */,
+			);
+			path = db;
+			sourceTree = "<group>";
+		};
+		D2E133C1AE3EE2562225D846 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6DA5F5D45DC5B1971D2F26F2 /* Pods_Somali.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4526FDA51DC64D0C005F2DFA /* Somali */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4526FDB81DC64D0C005F2DFA /* Build configuration list for PBXNativeTarget "Somali" */;
+			buildPhases = (
+				CE8840B9404BB5372D9D39B8 /* [CP] Check Pods Manifest.lock */,
+				4526FDA21DC64D0C005F2DFA /* Sources */,
+				4526FDA31DC64D0C005F2DFA /* Frameworks */,
+				4526FDA41DC64D0C005F2DFA /* Resources */,
+				67C794462DFE49387881485A /* [CP] Embed Pods Frameworks */,
+				12773CC47E19A272A09426F2 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Somali;
+			productName = Somali;
+			productReference = 4526FDA61DC64D0C005F2DFA /* Somali.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4526FD9E1DC64D0C005F2DFA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0800;
+				LastUpgradeCheck = 0800;
+				ORGANIZATIONNAME = "ux-xu";
+				TargetAttributes = {
+					4526FDA51DC64D0C005F2DFA = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = NER58PY4N6;
+						LastSwiftMigration = 0800;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 4526FDA11DC64D0C005F2DFA /* Build configuration list for PBXProject "Somali" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4526FD9D1DC64D0C005F2DFA;
+			productRefGroup = 4526FDA71DC64D0C005F2DFA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4526FDA51DC64D0C005F2DFA /* Somali */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4526FDA41DC64D0C005F2DFA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4526FDB41DC64D0C005F2DFA /* LaunchScreen.storyboard in Resources */,
+				4526FDB11DC64D0C005F2DFA /* Assets.xcassets in Resources */,
+				4526FDAF1DC64D0C005F2DFA /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		12773CC47E19A272A09426F2 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Somali/Pods-Somali-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		67C794462DFE49387881485A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Somali/Pods-Somali-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CE8840B9404BB5372D9D39B8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4526FDA21DC64D0C005F2DFA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				45B394B51DD170D2001E75A2 /* DeviceViewController.swift in Sources */,
+				45B394B71DD17137001E75A2 /* ChatroomViewController.swift in Sources */,
+				45B394E41DD19C7E001E75A2 /* CommonUtil.swift in Sources */,
+				45B394E81DD1A128001E75A2 /* Owner.swift in Sources */,
+				45B4998B1DE6D75B0038D9D3 /* Config.swift in Sources */,
+				45B394EA1DD1A176001E75A2 /* ServiceInfo.swift in Sources */,
+				450B37BC1DD312A40092A3ED /* ChatroomTableCell.swift in Sources */,
+				45B394E61DD19D32001E75A2 /* Device.swift in Sources */,
+				4526FDAA1DC64D0C005F2DFA /* AppDelegate.swift in Sources */,
+				45B394DE1DD19C20001E75A2 /* Message.swift in Sources */,
+				450B37BA1DD30C550092A3ED /* Member.swift in Sources */,
+				450B37B61DD2E9AC0092A3ED /* DeviceTableCell.swift in Sources */,
+				45B394E11DD19C75001E75A2 /* SomaliDB.swift in Sources */,
+				450B37B81DD30AAE0092A3ED /* Chatroom.swift in Sources */,
+				45B394B91DD1715B001E75A2 /* ChatViewController.swift in Sources */,
+				451363781DD5718E00398920 /* Intonation.swift in Sources */,
+				45B394E21DD19C75001E75A2 /* SomaliSocket.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		4526FDAD1DC64D0C005F2DFA /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4526FDAE1DC64D0C005F2DFA /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		4526FDB21DC64D0C005F2DFA /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4526FDB31DC64D0C005F2DFA /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4526FDB61DC64D0C005F2DFA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		4526FDB71DC64D0C005F2DFA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		4526FDB91DC64D0C005F2DFA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AF994B0F38D8D278D1A3E1BD /* Pods-Somali.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = NER58PY4N6;
+				INFOPLIST_FILE = Somali/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ux-xu.Somali";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Somali/Somali-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		4526FDBA1DC64D0C005F2DFA /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7F0C189F68851955E23A84F8 /* Pods-Somali.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = NER58PY4N6;
+				INFOPLIST_FILE = Somali/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ux-xu.Somali";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Somali/Somali-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4526FDA11DC64D0C005F2DFA /* Build configuration list for PBXProject "Somali" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4526FDB61DC64D0C005F2DFA /* Debug */,
+				4526FDB71DC64D0C005F2DFA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4526FDB81DC64D0C005F2DFA /* Build configuration list for PBXNativeTarget "Somali" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4526FDB91DC64D0C005F2DFA /* Debug */,
+				4526FDBA1DC64D0C005F2DFA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4526FD9E1DC64D0C005F2DFA /* Project object */;
+}
