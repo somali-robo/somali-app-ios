@@ -16,7 +16,7 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HxJ-fg-egd">
@@ -24,6 +24,8 @@
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5K9-bf-qnf">
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="1wk-yc-7zh"/>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="l6w-pD-VTU"/>
+                                <constraint firstAttribute="width" constant="165" id="zi7-zl-jyA"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                             <state key="normal" title="Close">
@@ -33,10 +35,17 @@
                                 <action selector="closePopup:" destination="-1" eventType="touchUpInside" id="eug-aM-Pq4"/>
                             </connections>
                         </button>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="alert512" translatesAutoresizingMaskIntoConstraints="NO" id="yDP-ZJ-klu"/>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="alert512" translatesAutoresizingMaskIntoConstraints="NO" id="yDP-ZJ-klu">
+                            <constraints>
+                                <constraint firstAttribute="height" constant="109" id="4f8-qC-2kz"/>
+                                <constraint firstAttribute="width" constant="167" id="Ahp-BM-KEW"/>
+                            </constraints>
+                        </imageView>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="243" translatesAutoresizingMaskIntoConstraints="NO" id="4bq-P4-Htc">
                             <constraints>
                                 <constraint firstAttribute="height" constant="110" id="8Fa-Ix-wEn"/>
+                                <constraint firstAttribute="width" constant="241" id="LFo-fQ-TOx"/>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="110" id="TWR-sj-gjt"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                             <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -45,27 +54,27 @@
                     </subviews>
                     <color key="backgroundColor" red="1" green="0.16983289600000001" blue="0.18623844279999999" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstItem="4bq-P4-Htc" firstAttribute="leading" secondItem="HxJ-fg-egd" secondAttribute="leading" constant="20" symbolic="YES" id="MHj-51-oxy"/>
-                        <constraint firstAttribute="trailing" secondItem="4bq-P4-Htc" secondAttribute="trailing" constant="20" symbolic="YES" id="U69-TJ-5fL"/>
+                        <constraint firstItem="5K9-bf-qnf" firstAttribute="centerX" secondItem="HxJ-fg-egd" secondAttribute="centerX" id="3w7-Zl-366"/>
+                        <constraint firstItem="yDP-ZJ-klu" firstAttribute="centerX" secondItem="HxJ-fg-egd" secondAttribute="centerX" id="6BO-6L-Hwc"/>
+                        <constraint firstItem="5K9-bf-qnf" firstAttribute="top" secondItem="4bq-P4-Htc" secondAttribute="bottom" constant="20" id="YaT-87-AAK"/>
                         <constraint firstItem="5K9-bf-qnf" firstAttribute="top" secondItem="4bq-P4-Htc" secondAttribute="bottom" constant="20" id="YuJ-rW-6zB"/>
+                        <constraint firstItem="4bq-P4-Htc" firstAttribute="top" secondItem="yDP-ZJ-klu" secondAttribute="bottom" constant="8" id="bx7-M1-eUh"/>
                         <constraint firstItem="4bq-P4-Htc" firstAttribute="top" secondItem="yDP-ZJ-klu" secondAttribute="bottom" constant="8" symbolic="YES" id="cSR-33-2mh"/>
-                        <constraint firstAttribute="bottom" secondItem="5K9-bf-qnf" secondAttribute="bottom" constant="20" symbolic="YES" id="hCa-vB-Oea"/>
-                        <constraint firstItem="5K9-bf-qnf" firstAttribute="leading" secondItem="HxJ-fg-egd" secondAttribute="leading" constant="58" id="imt-oy-OKn"/>
+                        <constraint firstItem="4bq-P4-Htc" firstAttribute="centerX" secondItem="HxJ-fg-egd" secondAttribute="centerX" id="dPo-4y-Psb"/>
                         <constraint firstItem="5K9-bf-qnf" firstAttribute="centerX" secondItem="4bq-P4-Htc" secondAttribute="centerX" id="inP-TU-wLv"/>
-                        <constraint firstItem="yDP-ZJ-klu" firstAttribute="leading" secondItem="HxJ-fg-egd" secondAttribute="leading" constant="57" id="jUE-NO-7dj"/>
                         <constraint firstItem="4bq-P4-Htc" firstAttribute="centerX" secondItem="yDP-ZJ-klu" secondAttribute="centerX" id="mZE-Yk-lTq"/>
-                        <constraint firstItem="yDP-ZJ-klu" firstAttribute="top" secondItem="HxJ-fg-egd" secondAttribute="top" constant="20" symbolic="YES" id="oTr-lx-QyI"/>
+                        <constraint firstItem="yDP-ZJ-klu" firstAttribute="top" secondItem="HxJ-fg-egd" secondAttribute="top" constant="195" id="ojj-eW-r4L"/>
                     </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="HxJ-fg-egd" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="8Bl-ag-Tfq"/>
-                <constraint firstItem="HxJ-fg-egd" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="CRC-V7-ebK"/>
-                <constraint firstItem="HxJ-fg-egd" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="47" id="Pcw-Qd-RQe"/>
-                <constraint firstItem="HxJ-fg-egd" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="175" id="w5H-Fb-eWF"/>
+                <constraint firstAttribute="bottom" secondItem="HxJ-fg-egd" secondAttribute="bottom" id="9ce-sr-t9G"/>
+                <constraint firstAttribute="trailing" secondItem="HxJ-fg-egd" secondAttribute="trailing" id="OZC-Wg-fzq"/>
+                <constraint firstItem="HxJ-fg-egd" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Pds-r0-lxw"/>
+                <constraint firstItem="HxJ-fg-egd" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="gUR-3S-SpA"/>
             </constraints>
-            <point key="canvasLocation" x="349" y="380"/>
+            <point key="canvasLocation" x="348.5" y="379.5"/>
         </view>
     </objects>
     <resources>
@@ -74,6 +83,6 @@
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
+        <simulatedScreenMetrics key="destination" type="retina5_5.fullscreen"/>
     </simulatedMetricsContainer>
 </document>

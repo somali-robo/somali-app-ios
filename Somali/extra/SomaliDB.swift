@@ -11,7 +11,6 @@ import Alamofire
 import SwiftyJSON
 
 class SomaliDB {
-    var apiProtocol:String
     var apiHost:String
     let API_SERVICE_INFOS:String = "/api/service_infos"
     let API_DEVICES:String = "/api/devices"
@@ -21,8 +20,7 @@ class SomaliDB {
     let API_BROADCAST_MESSAGES = "/api/broadcast_messages"
     
     //コンストラクタ
-    init(apiProtocol:String, apiHost:String){
-        self.apiProtocol = apiProtocol
+    init(apiHost:String){
         self.apiHost = apiHost
     }
     
@@ -54,7 +52,7 @@ class SomaliDB {
     //デバイス一覧を取得
     func getDevices(active:Bool,callback:@escaping ([Member]?,Error?)->Void){
         //devices/active/:active
-        let url = "\(self.apiProtocol)://\(self.apiHost)\(API_DEVICES)/active/\(active)"
+        let url = "\(self.apiHost)\(API_DEVICES)/active/\(active)"
         print("\(url)")
         Alamofire.request(url, method: .get, parameters: nil)
             .responseJSON { response in
@@ -91,7 +89,7 @@ class SomaliDB {
     
     //デバイス
     func getDevice(device:Member, callback:@escaping (Member?,Error?)->Void){
-        let url = "\(self.apiProtocol)://\(self.apiHost)\(API_DEVICES)/\(device._id!)"
+        let url = "\(self.apiHost)\(API_DEVICES)/\(device._id!)"
         print("url \(url)")
         Alamofire.request(url, method: .get, parameters: nil)
             .responseJSON { response in
@@ -119,7 +117,7 @@ class SomaliDB {
     
     //デバイスをアクティブ化
     func activeDevice(device:Member, callback:@escaping (Member?,Error?)->Void){
-        let url = "\(self.apiProtocol)://\(self.apiHost)\(API_DEVICES)/serial_code/\(device.serialCode!)"
+        let url = "\(self.apiHost)\(API_DEVICES)/serial_code/\(device.serialCode!)"
         print("\(url)")
         let params = ["name":(device.name)!]
         
@@ -149,7 +147,7 @@ class SomaliDB {
     
     //オーナー
     func getOwner(owner:Member, callback:@escaping (Member?,Error?)->Void){
-        let url = "\(self.apiProtocol)://\(self.apiHost)\(API_OWNERS)/\(owner._id)"
+        let url = "\(self.apiHost)\(API_OWNERS)/\(owner._id)"
         Alamofire.request(url, method: .get, parameters: nil)
             .responseJSON { response in
                 let json = response.result.value as! NSDictionary
@@ -176,7 +174,7 @@ class SomaliDB {
     
     //チャットルーム
     func getChatroom(roomId:String, callback:@escaping (Chatroom?,Error?)->Void){
-        let url = "\(self.apiProtocol)://\(self.apiHost)\(API_CHAT_ROOMS)/\(roomId)"
+        let url = "\(self.apiHost)\(API_CHAT_ROOMS)/\(roomId)"
         print("\(url)")
         
         Alamofire.request(url, method: .get, parameters: nil)
@@ -215,7 +213,7 @@ class SomaliDB {
     //チャットルーム一覧
     func getChatrooms(serialCode:String,callback:@escaping ([Chatroom]?,Error?)->Void){
         ///api/chat_rooms/members/device/:serialCode
-        let url = "\(self.apiProtocol)://\(self.apiHost)\(API_CHAT_ROOMS)/members/device/\(serialCode)"
+        let url = "\(self.apiHost)\(API_CHAT_ROOMS)/members/device/\(serialCode)"
         print("\(url)")
         
         Alamofire.request(url, method: .get, parameters: nil)
@@ -282,40 +280,40 @@ class SomaliDB {
     }
     
     private func setMessages(obj:Chatroom, messages:[NSDictionary]){
-        //print("messages -----")
+        print("setMessages -----")
         //print("\(messages)")
         
         messages.forEach({ (m) in
             
             let from = m["from"] as! NSDictionary
-            //print("from")
-            //print("\(from)")
-            
-            var member:Member?
-            let name = from["name"] as! String
-            let createdAt = from["createdAt"] as! String
-            let serialCode = from["serialCode"]
-            
-            var memberType:MemberType = MemberType.OWNER
-            if let serialCode = serialCode{
-                if serialCode as! String != "nil" {
-                    memberType = MemberType.DEVICE
-                }
-            }
-            //print("memberType \(memberType.rawValue)")
 
-            member = Member(id: NSUUID().uuidString,fields: ["name":name,"createdAt":createdAt,"memberType":memberType.rawValue])
-
-            //print("member")
-            //print("\(member)")
-            if let f = member {
-                let value = m["value"] as! String
-                let type = m["type"] as! String
-                let createdAt = m["createdAt"] as! String
-                let msg = Message(id: NSUUID().uuidString,fields: ["from":f,"value":value,"createdAt":createdAt,"type":type])
+            if let i = m["_id"] {
+                //print("i \(i)")
+                //print("from \(from)")
+                //print("value \(value)")
                 
+                let name = from["name"] as! String
+                let createdAt = from["createdAt"] as! String
+                let serialCode = from["serialCode"]
+                
+                var memberType:MemberType = MemberType.OWNER
+                if let serialCode = serialCode{
+                    if serialCode as! String != "nil" {
+                        memberType = MemberType.DEVICE
+                    }
+                }
+                
+                let member = Member(id: UUID().uuidString,fields: ["name":name,"createdAt":createdAt,"memberType":memberType.rawValue])
+                
+                let msgId = m["_id"] as! String
+                let msgValue = m["value"] as! String
+                let msgType = m["type"] as! String
+                let msgCreatedAt = m["createdAt"] as! String
+                let msg = Message(id: msgId,fields: ["from":member,"value":msgValue,"createdAt":msgCreatedAt,"type":msgType])
+
                 obj.messages.append(msg)
             }
+
         })
     }
     
@@ -323,7 +321,7 @@ class SomaliDB {
     public func putChatroomMessage(roomId:String,message:Message){
         print("posttChatroomMessage")
         
-        let url = "\(self.apiProtocol)://\(self.apiHost)\(API_CHAT_ROOMS)/\(roomId)/messages"
+        let url = "\(self.apiHost)\(API_CHAT_ROOMS)/\(roomId)/messages"
         print("\(url)")
         
         let params = ["message":["_id":message._id!,
@@ -342,7 +340,7 @@ class SomaliDB {
     //ブロードキャスト一覧を取得
     func getBroadcastMessages(callback:@escaping ([BroadcastMessage]?,Error?)->Void){
         //broadcast_message
-        let url = "\(self.apiProtocol)://\(self.apiHost)\(API_BROADCAST_MESSAGES)"
+        let url = "\(self.apiHost)\(API_BROADCAST_MESSAGES)"
         print("\(url)")
         Alamofire.request(url, method: .get, parameters: nil)
             .responseJSON { response in

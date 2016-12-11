@@ -15,7 +15,7 @@ import SwiftyDropbox
 import NMPopUpViewSwift
 
 class ChatViewController: JSQMessagesViewController {
-    let somaliDB:SomaliDB = SomaliDB(apiProtocol: Config.API_PROTOCOL,apiHost: Config.API_HOST)
+    let somaliDB:SomaliDB = SomaliDB(apiHost: Config.API_HOST)
 
     //アラート ポップアップ
     var alertViewController : PopUpViewControllerSwift!
@@ -128,6 +128,7 @@ class ChatViewController: JSQMessagesViewController {
     
     //画面にチャット追加
     func addMessage(senderId:String,msg:Message){
+        //print("addMessage \(msg.value)")
         DispatchQueue.mainSyncSafe {
             let type:String = msg.type!
             let displayName:String = msg.from!.name!
@@ -152,7 +153,7 @@ class ChatViewController: JSQMessagesViewController {
                 dropboxDownload(fileName:fileName,audioMediaItem:wav)
             }
             
-            //print("message \(message)")
+            print("message \(message)")
             if let msg = message{
                 self.messages.append(msg)
                 //チャット欄の表示更新
@@ -208,35 +209,39 @@ class ChatViewController: JSQMessagesViewController {
         
         //メッセージの初期値として設定する
         self.messageCnt = chatroom.messages.count
-        self.messages = []
         chatroom.messages.forEach({ (elem) in
-            print("elem ----")
+            //print("elem ----")
             
             let senderId:String = (elem.from?.memberType)!
-            print("senderId \(senderId) value:\((elem.value)!)")
-            print("elem._id \((elem._id)!)")
+            //print("senderId \(senderId) value:\((elem.value)!)")
+            //print("elem._id \((elem._id)!)")
+            
+            //print("dispMessageIds \(dispMessageIds)")
             
             //差分だけ画面に追加
-            var searchArray = [String]()
-            searchArray = dispMessageIds.filter{$0.localizedCaseInsensitiveContains("\((elem._id)!)")}
+            let msgId = (elem._id)!
+            let searchArray = dispMessageIds.filter{$0.localizedCaseInsensitiveContains(msgId)}
+            //print("msgId \(msgId) searchArray \(searchArray) \(searchArray.count)")
+            
             if searchArray.count == 0 {
                 addMessage(senderId:senderId,msg:elem)
-                dispMessageIds.append("\(elem._id)")
+                dispMessageIds.append(msgId)
             }
         })
     }
     
     //チャットルームを設定
     func setChatroom(broadcastMessage: [BroadcastMessage]) {
-        print("setChatroom broadcastMessage:\(broadcastMessage)")
+        //print("setChatroom broadcastMessage:\(broadcastMessage)")
         
         broadcastMessage.forEach({ (elem) in
             //差分だけ画面に追加
+            let msgId = (elem._id)!
             var searchArray = [String]()
-            searchArray = dispBroadcastMessageIds.filter{$0.localizedCaseInsensitiveContains("\((elem._id)!)")}
+            searchArray = dispBroadcastMessageIds.filter{$0.localizedCaseInsensitiveContains(msgId)}
             if searchArray.count == 0 {
                 addMessage(senderId:MemberType.SYSTEM.rawValue,msg:elem)
-                dispBroadcastMessageIds.append("\(elem._id)")
+                dispBroadcastMessageIds.append(msgId)
             }
         })
 
@@ -299,6 +304,11 @@ class ChatViewController: JSQMessagesViewController {
         if self._view == nil {
             //初期化が終わってない場合は画面にアラートは表示しない
             return
+        }
+        
+        if let alert = self.alertViewController {
+            //表示済みのアラートは閉じる
+            alert.closePopup(self._view!)
         }
         
         let bundle = Bundle.main

@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class ChatroomViewController:UIViewController, UITableViewDelegate, UITableViewDataSource{
-    let somaliDB:SomaliDB = SomaliDB(apiProtocol: Config.API_PROTOCOL,apiHost: Config.API_HOST)
+    let somaliDB:SomaliDB = SomaliDB(apiHost: Config.API_HOST)
     
     var device:Member?
     
