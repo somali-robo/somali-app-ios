@@ -12,38 +12,54 @@ import UIKit
 import JSQMessagesViewController
 import SwiftyJSON
 import SwiftyDropbox
+import NMPopUpViewSwift
 
 class ChatViewController: JSQMessagesViewController {
+    let somaliDB:SomaliDB = SomaliDB(apiProtocol: Config.API_PROTOCOL,apiHost: Config.API_HOST)
+
+    //アラート ポップアップ
+    var alertViewController : PopUpViewControllerSwift!
+    
     var messages: [JSQMessage] = []
     var incomingBubble: JSQMessagesBubbleImage!
     var outgoingBubble: JSQMessagesBubbleImage!
     var incomingAvatar: JSQMessagesAvatarImage!
     var outgoingAvatar: JSQMessagesAvatarImage!
-    
-    let somaliSocket:SomaliSocket = SomaliSocket()
-    
+
     var chatroom :Chatroom?
+    var messageCnt = 0
+    var broadcastMessageCnt = 0;
     
     var fromId:String?
     
-    var owner:Owner?
+    var owner:Member?
     
-    var dropboxClient:DropboxClient?
+    var dropboxClient:DropboxClient = DropboxClient(accessToken: Config.DROPBOX_ACCESS_TOKEN)
+    
+    //表示済みのMessage ID一覧
+    var dispMessageIds:[String] = []
+    
+    //表示済みの一斉送信メッセージID
+    var dispBroadcastMessageIds:[String] = []
+    
+    var _view:UIView? = nil
+    
+    var timer:Timer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         print("viewDidLoad")
+
+        //画面タイトルを空にする
+        self.title = ""
         
-        //Dropboxへのアクセスの為 初期化
-        self.dropboxClient = DropboxClient(accessToken: Config.DROPBOX_ACCESS_TOKEN)
-        
-        self.senderId = Member.MemberType.OWNER.toString()
+        self.senderId = MemberType.OWNER.rawValue
         self.senderDisplayName = "オーナー"
         
-        let roomId = self.chatroom?.id
-        
         //オーナーデータを作成
-        owner = Owner(id: self.fromId!,name: senderDisplayName,createdAt: "")
+        let createdAt = DateUtils.stringFromDate(date: NSDate(), format: "yyyy-MM-ddTHH:mm:ssZ")
+        owner = Member(id:self.fromId!,fields: ["name":senderDisplayName,"createdAt":createdAt])
+        
         //TODO: チャットルームに オーナーを追加して更新
         self.chatroom?.members.append(owner!)
         
@@ -56,96 +72,53 @@ class ChatViewController: JSQMessagesViewController {
         
         self.incomingAvatar = JSQMessagesAvatarImageFactory.avatarImage(with: UIImage(named: "device75")!, diameter: 64)
         self.outgoingAvatar = JSQMessagesAvatarImageFactory.avatarImage(with: UIImage(named: "icon75")!, diameter: 64)
-        
-        //Socket.io 接続
-        somaliSocket.connect(roomId:roomId!, fromId:self.fromId!,on:{ data in
-            print("on \(data)")
 
-            let dic = data?[0] as! NSDictionary
-            //let roomId = dic["roomId"] as! String
-            let fromId = dic["fromId"] as! String
-            let value  = dic["value"] as! String
-            
-            var m:Member? = nil
-            var senderId:String = self.senderId
-            self.chatroom?.members.forEach({ (member) in
-                print("member.id \(member.id)")
-                if member.id == fromId {
-                    m = member
-                    if member.memberType == Member.MemberType.DEVICE {
-                        senderId = Member.MemberType.DEVICE.toString()
-                    }
+        //ポーリングでチャットルームのメッセージを監視する
+        self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: BlockOperation(block: {
+            print("Timer event")
+            //チャットルーム
+            self.somaliDB.getChatroom(roomId:(self.chatroom?._id)!) { (chatroom, error) in
+                if let e = error {
+                    print("error \(e)")
+                    return;
                 }
-            });
-            
-            //受信したメーッセージを画面に追加する
-            if let m = m {
-                DispatchQueue.mainSyncSafe {
-                    //ここで value を json に変換
-                    if let dataFromString = value.data(using: .utf8, allowLossyConversion: false) {
-                        let json = JSON(data: dataFromString)
-                        print("json \(json)")
-                        let type = json["type"].string
-                        
-                        var message:JSQMessage?
-                        if type == Message.MessageType.TEXT.rawValue {
-                            let text = json["value"].string
-                            print("text \(text)")
-                            message = JSQMessage(senderId: senderId, displayName: m.name, text: text)
-                        }
-                        else if(type == Message.MessageType.TEXT.rawValue){
-                            //WAVの場合 リンク再生 表示
-                            let path = json["value"].string
-                            // ダウンロード先URLを設定
-                            let pathComponent = "\(NSUUID().uuidString)-\(path)"
-                            let directoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-                            let destURL = directoryURL.appendingPathComponent(pathComponent)
-                            let destination: (URL, HTTPURLResponse) -> URL = { temporaryURL, response in
-                                return destURL
-                            }
-                           
-                            self.dropboxClient?.files.download(path: "/\(path)",destination: destination)
-                                .response { response, error in
-                                    if let (metadata, url) = response {
-                                        //ファイルダウンローが成功した
-                                        print("metadata \(metadata)")
-                                        print("url \(url)")
-                                        
-                                        //WAVの場合 リンク 表示
-                                        let wav = JSQAudioMediaItem()
-                                        wav.setAudioDataWith(url)
-                                        message = JSQMessage(senderId: senderId, displayName: m.name, media:wav)
-                                        if let msg = message{
-                                            self.messages.append(msg)
-                                            self.finishReceivingMessage(animated:  true)
-                                        }
-                                    }
-                                    else if let error = error {
-                                        print(error)
-                                    }
-                                }
-                                .progress { progressData in
-                                    print(progressData)
-                            }
+                //print("chatroom \(chatroom)")
+                if let room = chatroom {
+                    //print(" messages.count \(room.messages.count)")
+                    //print(" messageCnt \(self.messageCnt)")
 
-                        }
-                        print("message \(message)")
-                        if let msg = message{
-                            self.messages.append(msg)
-                            self.finishReceivingMessage(animated:  true)
-                        }
-                        
+                    //メッセージ件数に変更があるか確認
+                    if(self.messageCnt < room.messages.count){
+                        //メッセージ件数に変更があった場合差分を更新
+                        self.setChatroom(chatroom: room)
+                        self.messageCnt = room.messages.count
                     }
                 }
             }
-        });
+            
+            //一斉送信メッセージ
+            self.somaliDB.getBroadcastMessages(){ (messages, error) in
+                if let e = error {
+                    print("error \(e)")
+                    return;
+                }
+                //メッセージ件数に変更があるか確認
+                if(self.broadcastMessageCnt < (messages?.count)!){
+                    self.setChatroom(broadcastMessage: messages!)
+                    self.broadcastMessageCnt = (messages?.count)!
+                }
+            }
+        }), selector: #selector(Operation.main), userInfo: nil, repeats: true)
+
+        //初期化終了時に view を設定
+        self._view = self.view;
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+        super.viewWillDisappear(true)
         print("viewWillDisappear()")
-        //Socket.io 切断
-        somaliSocket.disconnect()
+        //Timer停止
+        self.timer?.invalidate()
     }
     
     override func didReceiveMemoryWarning() {
@@ -153,6 +126,79 @@ class ChatViewController: JSQMessagesViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    //画面にチャット追加
+    func addMessage(senderId:String,msg:Message){
+        DispatchQueue.mainSyncSafe {
+            let type:String = msg.type!
+            let displayName:String = msg.from!.name!
+
+            var message:JSQMessage?
+            if type == MessageType.ALERT.rawValue {
+                //アラート表示
+                showAlert(title:"", message: msg.value!)
+            }
+            else if type == MessageType.TEXT.rawValue {
+                //テキストの場合
+                let text = msg.value!
+                message = JSQMessage(senderId: senderId, displayName: displayName, text: text)
+            }
+            else if type == MessageType.WAV.rawValue {
+                //WAVの場合 リンク再生 表示
+                let wav = JSQAudioMediaItem()
+                wav.appliesMediaViewMaskAsOutgoing = false
+                message = JSQMessage(senderId: senderId, displayName: displayName, media:wav)
+                    
+                let fileName = (msg.value)!
+                dropboxDownload(fileName:fileName,audioMediaItem:wav)
+            }
+            
+            //print("message \(message)")
+            if let msg = message{
+                self.messages.append(msg)
+                //チャット欄の表示更新
+                self.finishReceivingMessage(animated:  true)
+            }
+        }
+    }
+    
+    //一斉送信メッセージ
+    func addMessage(senderId:String,msg:BroadcastMessage){
+        let message = JSQMessage(senderId: senderId, displayName: msg.name, text: msg.value!)
+        if let msg = message{
+            self.messages.append(msg)
+            //チャット欄の表示更新
+            self.finishReceivingMessage(animated:  true)
+        }
+    }
+    
+    //DropboxからファイルをDownloadする
+    func dropboxDownload(fileName:String,audioMediaItem:JSQAudioMediaItem){
+        // ダウンロード先URLを設定
+        let directoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let destURL = directoryURL.appendingPathComponent(fileName)
+        let destination: (URL, HTTPURLResponse) -> URL = { temporaryURL, response in
+            return destURL
+        }
+        
+        self.dropboxClient.files.download(path: "/\(fileName)", overwrite: true, destination: destination)
+            .response { response, error in
+                if let (metadata, url) = response {
+                    //ファイルダウンローが成功した
+                    //print("metadata \(metadata)")
+                    //print("url \(url)")
+                    //WAVの場合 リンク 表示
+                    audioMediaItem.setAudioDataWith(url)
+                    //チャット欄の表示更新
+                    self.finishReceivingMessage(animated:  true)
+                }
+                else if let error = error {
+                    print(error)
+                }
+            }
+            .progress { progressData in
+                print(progressData)
+        }
+    }
     
     //チャットルームを設定
     func setChatroom(chatroom :Chatroom) {
@@ -161,20 +207,39 @@ class ChatViewController: JSQMessagesViewController {
         self.chatroom = chatroom
         
         //メッセージの初期値として設定する
+        self.messageCnt = chatroom.messages.count
         self.messages = []
         chatroom.messages.forEach({ (elem) in
-            print("elem")
-            print("\(elem)")
+            print("elem ----")
             
-            var senderId:String = "owner"
-            if elem.from?.memberType != Member.MemberType.DEVICE {
-                senderId = "device"
+            let senderId:String = (elem.from?.memberType)!
+            print("senderId \(senderId) value:\((elem.value)!)")
+            print("elem._id \((elem._id)!)")
+            
+            //差分だけ画面に追加
+            var searchArray = [String]()
+            searchArray = dispMessageIds.filter{$0.localizedCaseInsensitiveContains("\((elem._id)!)")}
+            if searchArray.count == 0 {
+                addMessage(senderId:senderId,msg:elem)
+                dispMessageIds.append("\(elem._id)")
             }
-            let message = JSQMessage(senderId: senderId, displayName: elem.from?.name, text: elem.value)
-            self.messages.append(message!)
-            
-            self.finishReceivingMessage(animated:  true)
         })
+    }
+    
+    //チャットルームを設定
+    func setChatroom(broadcastMessage: [BroadcastMessage]) {
+        print("setChatroom broadcastMessage:\(broadcastMessage)")
+        
+        broadcastMessage.forEach({ (elem) in
+            //差分だけ画面に追加
+            var searchArray = [String]()
+            searchArray = dispBroadcastMessageIds.filter{$0.localizedCaseInsensitiveContains("\((elem._id)!)")}
+            if searchArray.count == 0 {
+                addMessage(senderId:MemberType.SYSTEM.rawValue,msg:elem)
+                dispBroadcastMessageIds.append("\(elem._id)")
+            }
+        })
+
     }
     
     @IBAction func clickBtnBack(_ sender: AnyObject) {
@@ -184,16 +249,30 @@ class ChatViewController: JSQMessagesViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
+    //アクセサリーボタン
+    override func didPressAccessoryButton(_ sender: UIButton!) {
+        print("didPressAccessoryButton")
+    }
+    
     //Sendボタンが押された時に呼ばれる
     override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
-        //Socket.io サーバに送信
-        let message = Message.init(from: owner!, type: .TEXT, value: text, createdAt: "2016-11-24T06:01:45.246Z")
-        self.somaliSocket.sendMessage(fromId:self.fromId!, message:message)
+        print("didPressSend")
+        
+        let createdAt = DateUtils.stringFromDate(date: NSDate(), format: "yyyy-MM-ddTHH:mm:ssZ")
+        let message = Message(id:NSUUID().uuidString,fields:["from": owner!,"type": MessageType.TEXT.rawValue,"value":text,"createdAt": createdAt])
+        
+        //感情認識APIのテスト
+        //let message = Message(id:NSUUID().uuidString,fields:["from": owner!,"type": MessageType.WAV.rawValue,"value":"sample.wav","createdAt": createdAt])
+        
+        print("message \(message)")
+        
+        self.somaliDB.putChatroomMessage(roomId: (self.chatroom?._id!)!,message:message)
     }
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageDataForItemAt indexPath: IndexPath!) -> JSQMessageData! {
         return self.messages[indexPath.item]
     }
+    
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAt indexPath: IndexPath!) -> JSQMessageBubbleImageDataSource! {
         let message = self.messages[indexPath.item]
@@ -213,6 +292,31 @@ class ChatViewController: JSQMessagesViewController {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return (self.messages.count)
+    }
+    
+    //アラートを表示
+    func showAlert(title:String,message:String){
+        if self._view == nil {
+            //初期化が終わってない場合は画面にアラートは表示しない
+            return
+        }
+        
+        let bundle = Bundle.main
+        if UIScreen.main.bounds.size.width > 320 {
+            if UIScreen.main.scale == 3 {
+                self.alertViewController = PopUpViewControllerSwift(nibName: "AlertViewController_iPhone6Plus", bundle: bundle)
+            } else {
+                self.alertViewController = PopUpViewControllerSwift(nibName: "AlertViewController_iPhone6", bundle: bundle)
+            }
+        } else {
+            self.alertViewController = PopUpViewControllerSwift(nibName: "AlertViewController", bundle: bundle)
+        }
+        print("self.alertViewController \(self.alertViewController)")
+        self.alertViewController.title = title
+        self.alertViewController.showInView(self._view, withImage: UIImage(named: "alert512"), withMessage: message, animated: true)
+    
+        //アラート音を鳴らす
+        CommonUtil.playAlarm(fileName: "alert01")
     }
 }
 

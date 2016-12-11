@@ -1,40 +1,61 @@
 //
-//  Member.swift
+//  Owner.swift
 //  Somali
 //
-//  Created by 古川信行 on 2016/11/09.
+//  Created by 古川信行 on 2016/11/08.
 //  Copyright © 2016年 ux-xu. All rights reserved.
 //
 
 import Foundation
 
-class Member {
-    var id:String?
-    var memberType:MemberType
-    var name:String
-    var createdAt:String
+enum MemberType:String {
+    case OWNER = "owner"
+    case DEVICE = "device"
+    case SYSTEM = "system"
+}
+
+class Member{
+    var _id:String?
+    var serialCode:String?
+    var name:String?
+    var createdAt:String?
+    var memberType:String?
+    var device:Member?
     
-    enum MemberType {
-        case OWNER
-        case DEVICE
+    required init(id:String, fields:NSDictionary?) {
+        self._id = id
+        self.update(fields: fields)
+    }
+    
+    func update(fields:NSDictionary?) {        
+        if let serialCode = fields?.value(forKey: "serialCode") as? String {
+            self.serialCode = serialCode
+        }
         
-        func toString () -> String {
-            switch self{
-            case .DEVICE:
-                return "device"
-            default :
-                return "owner"
-            }
+        if let name = fields?.value(forKey: "name") as? String {
+            self.name = name
+        }
+        
+        if let memberType = fields?.value(forKey: "memberType") as? String {
+            self.memberType = memberType
+        }
+        
+        if let createdAt = fields?.value(forKey: "createdAt") as? String {
+            self.createdAt = createdAt
+        }
+        
+        if let device = fields?.value(forKey: "device") as? Member {
+            self.device = device
         }
     }
     
-    init(name:String,createdAt:String,memberType:MemberType){
-        self.name = name
-        self.createdAt = createdAt
-        self.memberType = memberType;
-    }
-    
-    func setId(id:String) {
-        self.id = id
+    func toJSON() -> Dictionary<String, Any> {
+        return [
+            "serialCode":self.serialCode,
+            "name":self.name!,
+            "createdAt":self.createdAt!,
+            "device":self.device?.toJSON()
+        ]
     }
 }
+

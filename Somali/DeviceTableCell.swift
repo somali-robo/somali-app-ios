@@ -27,7 +27,7 @@ class DeviceTableCell:UITableViewCell {
     }
     */
     
-    func setCell(device :Device) {
+    func setCell(device :Member) {
         self.serialCode.text = device.serialCode
         self.name.text = device.name
         self.createdAt.text = device.createdAt

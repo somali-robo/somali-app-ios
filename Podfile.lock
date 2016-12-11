@@ -9,7 +9,7 @@ PODS:
   - JSQMessagesViewController (7.3.0):
     - JSQSystemSoundPlayer (~> 2.0.1)
   - JSQSystemSoundPlayer (2.0.1)
-  - SIOSocket (0.2.0)
+  - NMPopUpViewSwift (4.0.2)
   - SwiftyDropbox (4.1.0):
     - Alamofire (~> 4.0.0)
   - SwiftyJSON (3.1.1)
@@ -19,7 +19,7 @@ DEPENDENCIES:
   - Alamofire (~> 4.0)
   - EZAudio (~> 1.1)
   - JSQMessagesViewController (= 7.3)
-  - SIOSocket (~> 0.2.0)
+  - NMPopUpViewSwift (~> 4.0)
   - SwiftyDropbox (~> 4.1)
   - SwiftyJSON (~> 3.1)
 
@@ -28,11 +28,11 @@ SPEC CHECKSUMS:
   EZAudio: 3b1cb4b6d7ebca68f0c2478576d75940aad4aa99
   JSQMessagesViewController: aa79a81b21387430d66aa657e5d1c5494b0ba307
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
-  SIOSocket: 2facc0bd02ae72d98c223634a46dd8ebdf9be321
+  NMPopUpViewSwift: 9a2ea26dd7875804c478eb97bbc41cdab5d25da8
   SwiftyDropbox: 0893e21982678ed69237c7c964a00c7a6f7079bb
   SwiftyJSON: f0be2e604f83e8405a624e9f891898bf6ed4e019
   TPCircularBuffer: 4960a919e667280f7f38963d771f45871b64fe62
 
-PODFILE CHECKSUM: f46a015e923a307b83965a3dfd13fb66133fe4f5
+PODFILE CHECKSUM: 5d3c0f3a94ade4fb69ae8079d7547b85b3ce3023
 
 COCOAPODS: 1.2.0.beta.1

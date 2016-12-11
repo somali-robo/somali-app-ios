@@ -9,31 +9,34 @@
 /* Begin PBXBuildFile section */
 		450B37B61DD2E9AC0092A3ED /* DeviceTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B37B51DD2E9AC0092A3ED /* DeviceTableCell.swift */; };
 		450B37B81DD30AAE0092A3ED /* Chatroom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B37B71DD30AAE0092A3ED /* Chatroom.swift */; };
-		450B37BA1DD30C550092A3ED /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B37B91DD30C550092A3ED /* Member.swift */; };
 		450B37BC1DD312A40092A3ED /* ChatroomTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B37BB1DD312A40092A3ED /* ChatroomTableCell.swift */; };
 		451363781DD5718E00398920 /* Intonation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451363771DD5718E00398920 /* Intonation.swift */; };
 		4526FDAA1DC64D0C005F2DFA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4526FDA91DC64D0C005F2DFA /* AppDelegate.swift */; };
 		4526FDAF1DC64D0C005F2DFA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4526FDAD1DC64D0C005F2DFA /* Main.storyboard */; };
 		4526FDB11DC64D0C005F2DFA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4526FDB01DC64D0C005F2DFA /* Assets.xcassets */; };
 		4526FDB41DC64D0C005F2DFA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4526FDB21DC64D0C005F2DFA /* LaunchScreen.storyboard */; };
+		45577BEC1DF1F22900621991 /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45577BEB1DF1F22900621991 /* Document.swift */; };
+		455A49DE1DF998D9002AD748 /* AlertViewController_iPhone6.xib in Resources */ = {isa = PBXBuildFile; fileRef = 455A49DA1DF998D9002AD748 /* AlertViewController_iPhone6.xib */; };
+		455A49DF1DF998D9002AD748 /* AlertViewController_iPhone6Plus.xib in Resources */ = {isa = PBXBuildFile; fileRef = 455A49DB1DF998D9002AD748 /* AlertViewController_iPhone6Plus.xib */; };
+		455A49E01DF998D9002AD748 /* AlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 455A49DC1DF998D9002AD748 /* AlertViewController.xib */; };
+		455A49E61DF9A128002AD748 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 455A49E51DF9A128002AD748 /* AVFoundation.framework */; };
+		45AF1D8A1DFC4092007668B6 /* BroadcastMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AF1D891DFC4092007668B6 /* BroadcastMessage.swift */; };
 		45B394B51DD170D2001E75A2 /* DeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B394B41DD170D2001E75A2 /* DeviceViewController.swift */; };
 		45B394B71DD17137001E75A2 /* ChatroomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B394B61DD17137001E75A2 /* ChatroomViewController.swift */; };
 		45B394B91DD1715B001E75A2 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B394B81DD1715B001E75A2 /* ChatViewController.swift */; };
 		45B394DE1DD19C20001E75A2 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B394DD1DD19C20001E75A2 /* Message.swift */; };
 		45B394E11DD19C75001E75A2 /* SomaliDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B394DF1DD19C75001E75A2 /* SomaliDB.swift */; };
-		45B394E21DD19C75001E75A2 /* SomaliSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B394E01DD19C75001E75A2 /* SomaliSocket.swift */; };
 		45B394E41DD19C7E001E75A2 /* CommonUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B394E31DD19C7E001E75A2 /* CommonUtil.swift */; };
-		45B394E61DD19D32001E75A2 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B394E51DD19D32001E75A2 /* Device.swift */; };
-		45B394E81DD1A128001E75A2 /* Owner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B394E71DD1A128001E75A2 /* Owner.swift */; };
-		45B394EA1DD1A176001E75A2 /* ServiceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B394E91DD1A176001E75A2 /* ServiceInfo.swift */; };
+		45B394E81DD1A128001E75A2 /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B394E71DD1A128001E75A2 /* Member.swift */; };
 		45B4998B1DE6D75B0038D9D3 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B4998A1DE6D75B0038D9D3 /* Config.swift */; };
+		45BB99591DF9A7F7008D5523 /* alert01.wav in Resources */ = {isa = PBXBuildFile; fileRef = 45BB99581DF9A7F7008D5523 /* alert01.wav */; };
+		45BB995B1DF9A8A4008D5523 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45BB995A1DF9A8A4008D5523 /* AudioToolbox.framework */; };
 		C7231608F12299705A8C3213 /* Pods_Somali.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DA5F5D45DC5B1971D2F26F2 /* Pods_Somali.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		450B37B51DD2E9AC0092A3ED /* DeviceTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceTableCell.swift; sourceTree = "<group>"; };
 		450B37B71DD30AAE0092A3ED /* Chatroom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chatroom.swift; sourceTree = "<group>"; };
-		450B37B91DD30C550092A3ED /* Member.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
 		450B37BB1DD312A40092A3ED /* ChatroomTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatroomTableCell.swift; sourceTree = "<group>"; };
 		451363771DD5718E00398920 /* Intonation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Intonation.swift; sourceTree = "<group>"; };
 		4526FDA61DC64D0C005F2DFA /* Somali.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Somali.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -43,17 +46,22 @@
 		4526FDB31DC64D0C005F2DFA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4526FDB51DC64D0C005F2DFA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4526FDC21DC6509F005F2DFA /* Somali-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Somali-Bridging-Header.h"; sourceTree = "<group>"; };
+		45577BEB1DF1F22900621991 /* Document.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
+		455A49DA1DF998D9002AD748 /* AlertViewController_iPhone6.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertViewController_iPhone6.xib; sourceTree = "<group>"; };
+		455A49DB1DF998D9002AD748 /* AlertViewController_iPhone6Plus.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertViewController_iPhone6Plus.xib; sourceTree = "<group>"; };
+		455A49DC1DF998D9002AD748 /* AlertViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertViewController.xib; sourceTree = "<group>"; };
+		455A49E51DF9A128002AD748 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		45AF1D891DFC4092007668B6 /* BroadcastMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BroadcastMessage.swift; sourceTree = "<group>"; };
 		45B394B41DD170D2001E75A2 /* DeviceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceViewController.swift; sourceTree = "<group>"; };
 		45B394B61DD17137001E75A2 /* ChatroomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatroomViewController.swift; sourceTree = "<group>"; };
 		45B394B81DD1715B001E75A2 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		45B394DD1DD19C20001E75A2 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		45B394DF1DD19C75001E75A2 /* SomaliDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SomaliDB.swift; sourceTree = "<group>"; };
-		45B394E01DD19C75001E75A2 /* SomaliSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SomaliSocket.swift; sourceTree = "<group>"; };
 		45B394E31DD19C7E001E75A2 /* CommonUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonUtil.swift; sourceTree = "<group>"; };
-		45B394E51DD19D32001E75A2 /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
-		45B394E71DD1A128001E75A2 /* Owner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Owner.swift; sourceTree = "<group>"; };
-		45B394E91DD1A176001E75A2 /* ServiceInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceInfo.swift; sourceTree = "<group>"; };
+		45B394E71DD1A128001E75A2 /* Member.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
 		45B4998A1DE6D75B0038D9D3 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		45BB99581DF9A7F7008D5523 /* alert01.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = alert01.wav; sourceTree = "<group>"; };
+		45BB995A1DF9A8A4008D5523 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		6DA5F5D45DC5B1971D2F26F2 /* Pods_Somali.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Somali.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F0C189F68851955E23A84F8 /* Pods-Somali.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Somali.release.xcconfig"; path = "Pods/Target Support Files/Pods-Somali/Pods-Somali.release.xcconfig"; sourceTree = "<group>"; };
 		AF994B0F38D8D278D1A3E1BD /* Pods-Somali.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Somali.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Somali/Pods-Somali.debug.xcconfig"; sourceTree = "<group>"; };
@@ -64,6 +72,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45BB995B1DF9A8A4008D5523 /* AudioToolbox.framework in Frameworks */,
+				455A49E61DF9A128002AD748 /* AVFoundation.framework in Frameworks */,
 				C7231608F12299705A8C3213 /* Pods_Somali.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -101,6 +111,7 @@
 		4526FDA81DC64D0C005F2DFA /* Somali */ = {
 			isa = PBXGroup;
 			children = (
+				455A49D81DF9988F002AD748 /* resources */,
 				45B394DB1DD19BEA001E75A2 /* extra */,
 				4526FDA91DC64D0C005F2DFA /* AppDelegate.swift */,
 				4526FDAD1DC64D0C005F2DFA /* Main.storyboard */,
@@ -118,11 +129,21 @@
 			path = Somali;
 			sourceTree = "<group>";
 		};
+		455A49D81DF9988F002AD748 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				45BB99581DF9A7F7008D5523 /* alert01.wav */,
+				455A49DA1DF998D9002AD748 /* AlertViewController_iPhone6.xib */,
+				455A49DB1DF998D9002AD748 /* AlertViewController_iPhone6Plus.xib */,
+				455A49DC1DF998D9002AD748 /* AlertViewController.xib */,
+			);
+			path = resources;
+			sourceTree = "<group>";
+		};
 		45B394DB1DD19BEA001E75A2 /* extra */ = {
 			isa = PBXGroup;
 			children = (
 				45B394E31DD19C7E001E75A2 /* CommonUtil.swift */,
-				45B394E01DD19C75001E75A2 /* SomaliSocket.swift */,
 				45B394DF1DD19C75001E75A2 /* SomaliDB.swift */,
 				45B394DC1DD19C20001E75A2 /* db */,
 			);
@@ -133,12 +154,11 @@
 			isa = PBXGroup;
 			children = (
 				45B394DD1DD19C20001E75A2 /* Message.swift */,
-				45B394E51DD19D32001E75A2 /* Device.swift */,
-				45B394E71DD1A128001E75A2 /* Owner.swift */,
-				45B394E91DD1A176001E75A2 /* ServiceInfo.swift */,
+				45B394E71DD1A128001E75A2 /* Member.swift */,
 				450B37B71DD30AAE0092A3ED /* Chatroom.swift */,
-				450B37B91DD30C550092A3ED /* Member.swift */,
 				451363771DD5718E00398920 /* Intonation.swift */,
+				45577BEB1DF1F22900621991 /* Document.swift */,
+				45AF1D891DFC4092007668B6 /* BroadcastMessage.swift */,
 			);
 			path = db;
 			sourceTree = "<group>";
@@ -146,6 +166,8 @@
 		D2E133C1AE3EE2562225D846 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				45BB995A1DF9A8A4008D5523 /* AudioToolbox.framework */,
+				455A49E51DF9A128002AD748 /* AVFoundation.framework */,
 				6DA5F5D45DC5B1971D2F26F2 /* Pods_Somali.framework */,
 			);
 			name = Frameworks;
@@ -215,9 +237,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				455A49DE1DF998D9002AD748 /* AlertViewController_iPhone6.xib in Resources */,
+				455A49DF1DF998D9002AD748 /* AlertViewController_iPhone6Plus.xib in Resources */,
 				4526FDB41DC64D0C005F2DFA /* LaunchScreen.storyboard in Resources */,
 				4526FDB11DC64D0C005F2DFA /* Assets.xcassets in Resources */,
+				45BB99591DF9A7F7008D5523 /* alert01.wav in Resources */,
 				4526FDAF1DC64D0C005F2DFA /* Main.storyboard in Resources */,
+				455A49E01DF998D9002AD748 /* AlertViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,20 +305,18 @@
 				45B394B51DD170D2001E75A2 /* DeviceViewController.swift in Sources */,
 				45B394B71DD17137001E75A2 /* ChatroomViewController.swift in Sources */,
 				45B394E41DD19C7E001E75A2 /* CommonUtil.swift in Sources */,
-				45B394E81DD1A128001E75A2 /* Owner.swift in Sources */,
+				45B394E81DD1A128001E75A2 /* Member.swift in Sources */,
 				45B4998B1DE6D75B0038D9D3 /* Config.swift in Sources */,
-				45B394EA1DD1A176001E75A2 /* ServiceInfo.swift in Sources */,
 				450B37BC1DD312A40092A3ED /* ChatroomTableCell.swift in Sources */,
-				45B394E61DD19D32001E75A2 /* Device.swift in Sources */,
 				4526FDAA1DC64D0C005F2DFA /* AppDelegate.swift in Sources */,
 				45B394DE1DD19C20001E75A2 /* Message.swift in Sources */,
-				450B37BA1DD30C550092A3ED /* Member.swift in Sources */,
 				450B37B61DD2E9AC0092A3ED /* DeviceTableCell.swift in Sources */,
+				45AF1D8A1DFC4092007668B6 /* BroadcastMessage.swift in Sources */,
 				45B394E11DD19C75001E75A2 /* SomaliDB.swift in Sources */,
 				450B37B81DD30AAE0092A3ED /* Chatroom.swift in Sources */,
+				45577BEC1DF1F22900621991 /* Document.swift in Sources */,
 				45B394B91DD1715B001E75A2 /* ChatViewController.swift in Sources */,
 				451363781DD5718E00398920 /* Intonation.swift in Sources */,
-				45B394E21DD19C75001E75A2 /* SomaliSocket.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

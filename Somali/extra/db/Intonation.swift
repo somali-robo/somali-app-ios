@@ -8,26 +8,38 @@
 
 import Foundation
 
-class Intonation {
-    var id:String?
+class Intonation{
+    var _id:String?
     var calm:String?
     var anger:String?
     var joy:String?
     var sorrow:String?
     var energy:String?
     var createdAt:String?
- 
-    init(calm:String,anger:String,joy:String,sorrow:String,energy:String, createdAt:String){
-        self.calm = calm
-        self.anger = anger
-        self.joy = joy
-        self.sorrow = sorrow
-        self.energy = energy
-        self.createdAt = createdAt
+    
+    required init(id:String, fields:NSDictionary?) {
+        self._id = id
+        self.update(fields: fields)
     }
     
-    
-    func setId(id:String) {
-        self.id = id
+    func update(fields:NSDictionary?) {
+        if let calm = fields?.value(forKey: "calm") as? String {
+            self.calm = calm
+        }
+        if let anger = fields?.value(forKey: "anger") as? String {
+            self.anger = anger
+        }
+        if let joy = fields?.value(forKey: "joy") as? String {
+            self.joy = joy
+        }
+        if let sorrow = fields?.value(forKey: "sorrow") as? String {
+            self.sorrow = sorrow
+        }
+        if let energy = fields?.value(forKey: "energy") as? String {
+            self.energy = energy
+        }
+        if let createdAt = fields?.value(forKey: "createdAt") as? String {
+            self.createdAt = createdAt
+        }
     }
 }

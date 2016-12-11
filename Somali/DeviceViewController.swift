@@ -10,13 +10,12 @@ import Foundation
 import UIKit
 
 class DeviceViewController:UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
-    let somaliDB:SomaliDB = SomaliDB()
+    let somaliDB:SomaliDB = SomaliDB(apiProtocol: Config.API_PROTOCOL,apiHost: Config.API_HOST)
     
     @IBOutlet weak var tableView: UITableView!
     
     //デバイス一覧
-    var devices:[Device] = []
+    var devices:[Member] = []
     
     var nextVc:ChatroomViewController?
     
@@ -28,15 +27,6 @@ class DeviceViewController:UIViewController, UITableViewDelegate, UITableViewDat
 
         //一覧をロード
         reloadData()
-        
-        /*
-        //サービス情報を取得
-        somaliDB.getServiceInfo { (serviceInfo, error) in
-            print("serviceInfo \(serviceInfo?.name)")
-            //Socket.io ポート等を ここで設定して接続する
-            //serviceInfo?.socketPort
-        }
-        */
         
         /*
          //オーナー の詳細を取得してみる
@@ -52,7 +42,7 @@ class DeviceViewController:UIViewController, UITableViewDelegate, UITableViewDat
     
     //デバイス一覧をロードする
     func reloadData(){
-        somaliDB.getDevices { (devices, error) in
+        somaliDB.getDevices(active: true) { (devices, error) in
             print("devices \(devices)")
             if let e = error {
                 print("error \(e)")
@@ -80,8 +70,8 @@ class DeviceViewController:UIViewController, UITableViewDelegate, UITableViewDat
             if let d = device {
                 
                 print("d \(d)")
-                //デバイスを追加する
-                self.somaliDB.addDevice(device: d) { (device, error) in
+                //デバイスをアクテイブ化
+                self.somaliDB.activeDevice(device: d) { (device, error) in
                     print("addDevice \(device)")
                     //テーブルを更新する
                     self.reloadData()
@@ -92,7 +82,7 @@ class DeviceViewController:UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     //デバイス追加ダイアログ
-    func showAddDeviceDialog(callback:@escaping (Device?)->Void) {
+    func showAddDeviceDialog(callback:@escaping (Member?)->Void) {
         var txtSerialCode: UITextField?
         var txtName: UITextField?
         
@@ -113,11 +103,19 @@ class DeviceViewController:UIViewController, UITableViewDelegate, UITableViewDat
                                                         handler:{
                                                             (action:UIAlertAction!) -> Void in
                                                             print("OK")
-                                                            let serialCode = txtSerialCode?.text
-                                                            let name = txtName?.text
-                                                            //2016-11-07T03:58:49.536Z
+                                                            let serialCode = (txtSerialCode?.text)!
+                                                            let name = (txtName?.text)!
+                                                            
+                                                            print("serialCode \(serialCode) name \(name)")
+                                                            //TODO: 入力チェック
+                                                            
                                                             let createdAt = DateUtils.stringFromDate(date: NSDate(), format: "yyyy-MM-ddTHH:mm:ssZ")
-                                                            let device = Device(serialCode:serialCode!, name:name!, createdAt:createdAt)
+                                                            let device = Member(id: NSUUID().uuidString,
+                                                                                fields: ["serialCode": serialCode,
+                                                                                         "name":name,
+                                                                                         "createdAt":createdAt,
+                                                                                         "memberType":MemberType.DEVICE.rawValue])
+                                                            
                                                             //コールバックする
                                                             callback(device)
 
@@ -128,11 +126,13 @@ class DeviceViewController:UIViewController, UITableViewDelegate, UITableViewDat
         
         alertController.addTextField(configurationHandler: {(textField:UITextField!) -> Void in
             txtSerialCode = textField
+            txtSerialCode?.placeholder = "シリアルコード"
+
         })
         
         alertController.addTextField(configurationHandler: {(textField:UITextField!) -> Void in
             txtName = textField
-            //txtName?.text = "101号室のタマ"
+            txtName?.placeholder = "ニックネーム"
         })
         
         present(alertController, animated: true, completion: nil)

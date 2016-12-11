@@ -8,25 +8,30 @@
 
 import Foundation
 import Alamofire
+import SwiftyJSON
 
 class SomaliDB {
-    //let API_BASE = "http://192.168.1.178:3000"
-    let API_BASE = "http://192.168.11.64:3000"
-    //let API_BASE = "https://somali-server.herokuapp.com"
+    var apiProtocol:String
+    var apiHost:String
     let API_SERVICE_INFOS:String = "/api/service_infos"
     let API_DEVICES:String = "/api/devices"
     let API_OWNERS:String = "/api/owners"
     let API_CHAT_ROOMS:String = "/api/chat_rooms"
     let API_MESSAGES:String = "/api/messages"
+    let API_BROADCAST_MESSAGES = "/api/broadcast_messages"
     
+    //コンストラクタ
+    init(apiProtocol:String, apiHost:String){
+        self.apiProtocol = apiProtocol
+        self.apiHost = apiHost
+    }
     
     //エラーをコールバックする
-    private func callbackError(response:DataResponse<Any>, callback:@escaping (Any?,Error?)->Void){
+    private func createError(response:DataResponse<Any>) -> Error{
         let statusCode = response.response?.statusCode
         let msg = response.result.value
         print("code:\(statusCode) \(msg)")
-        let error:Error = NSError(domain: "com.ux-xu.Somali", code: statusCode!, userInfo: ["NSLocalizedDescriptionKey":msg])
-        callback(nil,error)
+        return NSError(domain: "com.ux-xu.Somali", code: statusCode!, userInfo: ["NSLocalizedDescriptionKey":msg])
     }
     
     /** メッセージ一覧を取得
@@ -40,42 +45,16 @@ class SomaliDB {
                 }
                 else{
                     print("Error withopennse")
-                    self.callbackError(response:response,callback: callback as! (Any?, Error?) -> Void)
+                    callback(nil,self.createError(response:response))
                 }
         }
     }
     
-    //ServiceInfo を取得する
-    func getServiceInfo(callback:@escaping (ServiceInfo?,Error?)->Void){
-        
-        let url = "\(API_BASE)\(API_SERVICE_INFOS)"
-        Alamofire.request(url, method: .get, parameters: nil)
-            .responseJSON { response in
-                let json = response.result.value as! NSDictionary
-                
-                if let data = json["data"] as? NSArray {
-                    print(data)
-                    let r = data[0] as! NSDictionary
-                    
-                    let name = r["name"] as! String
-                    let socketPort = r["socketPort"] as! Int
-                    let createdAt = r["createdAt"] as! String
 
-                    let serviceInfo:ServiceInfo = ServiceInfo(name: name,socketPort: socketPort,createdAt: createdAt)
-                    callback(serviceInfo,nil)
-                }
-                else{
-                    print("Error with response")
-                    self.callbackError(response:response,callback: callback as! (Any?, Error?) -> Void)
-                }
-        }
-    }
-    
-    
     //デバイス一覧を取得
-    func getDevices(callback:@escaping ([Device]?,Error?)->Void){
-        
-        let url = "\(API_BASE)\(API_DEVICES)"
+    func getDevices(active:Bool,callback:@escaping ([Member]?,Error?)->Void){
+        //devices/active/:active
+        let url = "\(self.apiProtocol)://\(self.apiHost)\(API_DEVICES)/active/\(active)"
         print("\(url)")
         Alamofire.request(url, method: .get, parameters: nil)
             .responseJSON { response in
@@ -85,7 +64,7 @@ class SomaliDB {
                 if let data = json["data"] as? NSArray {
                     print(data)
                     
-                    var result:[Device] = []
+                    var result:[Member] = []
                     for d in data {
                         if let d = d as? NSDictionary{
                             let id = d["_id"] as! String
@@ -93,8 +72,10 @@ class SomaliDB {
                             let name = d["name"] as! String
                             let createdAt = d["createdAt"] as! String
                             
-                            let device = Device(serialCode: serialCode,name: name,createdAt: createdAt)
-                            device.setId(id: id)
+                            let device = Member(id: id,
+                                                fields: ["serialCode": serialCode,
+                                                         "name":name,
+                                                         "createdAt":createdAt])
                             result.append(device)
                         }
                     }
@@ -102,15 +83,15 @@ class SomaliDB {
                 }
                 else{
                     print("Error with response")
-                    self.callbackError(response:response,callback: callback as! (Any?, Error?) -> Void)
+                    callback(nil,self.createError(response:response))
                 }
         }
     }
     
     
     //デバイス
-    func getDevice(device:Device, callback:@escaping (Device?,Error?)->Void){
-        let url = "\(API_BASE)\(API_DEVICES)/\(device.id!)"
+    func getDevice(device:Member, callback:@escaping (Member?,Error?)->Void){
+        let url = "\(self.apiProtocol)://\(self.apiHost)\(API_DEVICES)/\(device._id!)"
         print("url \(url)")
         Alamofire.request(url, method: .get, parameters: nil)
             .responseJSON { response in
@@ -119,35 +100,30 @@ class SomaliDB {
                 if let d = json["data"] as? NSDictionary {
                     print(d)
                     
-                    var result:Device? = nil
+                    var result:Member? = nil
                     let id = d["_id"] as! String
                     let serialCode = d["serialCode"] as! String
                     let name = d["name"] as! String
                     let createdAt = d["createdAt"] as! String
                             
-                    result = Device(serialCode: serialCode,name: name,createdAt: createdAt)
-                    device.setId(id: id)
+                    result = Member(id: id,fields: ["serialCode": serialCode,"name":name,"createdAt":createdAt])
                     
                     callback(result,nil)
                 }
                 else{
                     print("Error with response")
-                    self.callbackError(response:response,callback: callback as! (Any?, Error?) -> Void)
+                    callback(nil,self.createError(response:response))
                 }
         }
     }
     
-    //デバイス追加
-    func addDevice(device:Device, callback:@escaping (Device?,Error?)->Void){
-        let url = "\(API_BASE)\(API_DEVICES)"
+    //デバイスをアクティブ化
+    func activeDevice(device:Member, callback:@escaping (Member?,Error?)->Void){
+        let url = "\(self.apiProtocol)://\(self.apiHost)\(API_DEVICES)/serial_code/\(device.serialCode!)"
         print("\(url)")
+        let params = ["name":(device.name)!]
         
-        let parameters = ["serialCode":device.serialCode,
-                          "name":device.name,
-                          "createdAt":device.createdAt]
-        print("\(parameters)")
-        
-        Alamofire.request(url, method: .post, parameters: parameters)
+        Alamofire.request(url, method: .put, parameters: params)
             .responseJSON { response in
                 let json = response.result.value as! NSDictionary
                 //print(json)
@@ -160,21 +136,20 @@ class SomaliDB {
                     let name = d["name"] as! String
                     let createdAt = d["createdAt"] as! String
                         
-                    let result = Device(serialCode: serialCode,name: name,createdAt: createdAt)
-                    device.setId(id: id)
+                    let result = Member(id: id,fields: ["serialCode": serialCode,"name":name,"createdAt":createdAt])
                     
                     callback(result,nil)
                 }
                 else{
                     print("Error with response")
-                    self.callbackError(response:response,callback: callback as! (Any?, Error?) -> Void)
+                    callback(nil,self.createError(response:response))
                 }
         }
     }
     
     //オーナー
-    func getOwner(owner:Owner, callback:@escaping (Owner?,Error?)->Void){
-        let url = "\(API_BASE)\(API_OWNERS)/\(owner.id)"
+    func getOwner(owner:Member, callback:@escaping (Member?,Error?)->Void){
+        let url = "\(self.apiProtocol)://\(self.apiHost)\(API_OWNERS)/\(owner._id)"
         Alamofire.request(url, method: .get, parameters: nil)
             .responseJSON { response in
                 let json = response.result.value as! NSDictionary
@@ -182,37 +157,76 @@ class SomaliDB {
                 if let data = json["data"] as? NSArray {
                     print(data)
                     
-                    var result:Owner? = nil
+                    var result:Member? = nil
                     if let d = data[0] as? NSDictionary{
                         let id = d["_id"] as! String
                         let name = d["name"] as! String
                         let createdAt = d["createdAt"] as! String
                         
-                        result = Owner(id:id, name:name, createdAt:createdAt)
+                        result = Member(id: id,fields: ["name":name,"createdAt":createdAt])
                     }
                     callback(result,nil)
                 }
                 else{
                     print("Error with response")
-                    self.callbackError(response:response,callback: callback as! (Any?, Error?) -> Void)
+                    callback(nil,self.createError(response:response))
                 }
         }
     }
     
     //チャットルーム
-    func getChatrooms(callback:@escaping ([Chatroom]?,Error?)->Void){
-        let url = "\(API_BASE)\(API_CHAT_ROOMS)"
+    func getChatroom(roomId:String, callback:@escaping (Chatroom?,Error?)->Void){
+        let url = "\(self.apiProtocol)://\(self.apiHost)\(API_CHAT_ROOMS)/\(roomId)"
         print("\(url)")
         
         Alamofire.request(url, method: .get, parameters: nil)
             .responseJSON { response in
                 let json = response.result.value as! NSDictionary
-                print("json -----")
-                print("\(json)")
+                //print("json -----")
+                //print("\(json)")
+                
+                if let data = json["data"] as? NSDictionary {
+                    //print("data -----")
+                    //print(data)
+                    
+                    let id = data["_id"] as! String
+                    let name = data["name"] as! String
+                    let createdAt = data["createdAt"] as! String
+                            
+                    let obj = Chatroom(id: id,fields: ["name":name,"createdAt":createdAt])
+                            
+                    // メンバー
+                    let members = data["members"] as! [NSDictionary]
+                    self.setMembers(obj: obj, members:members )
+                            
+                    // メッセージ
+                    let messages = data["messages"] as! [NSDictionary]
+                    self.setMessages(obj: obj, messages:messages )
+                    
+                    callback(obj,nil)
+                }
+                else{
+                    print("Error with response")
+                    callback(nil,self.createError(response:response))
+                }
+        }
+    }
+    
+    //チャットルーム一覧
+    func getChatrooms(serialCode:String,callback:@escaping ([Chatroom]?,Error?)->Void){
+        ///api/chat_rooms/members/device/:serialCode
+        let url = "\(self.apiProtocol)://\(self.apiHost)\(API_CHAT_ROOMS)/members/device/\(serialCode)"
+        print("\(url)")
+        
+        Alamofire.request(url, method: .get, parameters: nil)
+            .responseJSON { response in
+                let json = response.result.value as! NSDictionary
+                //print("json -----")
+                //print("\(json)")
                 
                 if let data = json["data"] as? NSArray {
-                    print("data -----")
-                    print(data)
+                    //print("data -----")
+                    //print(data)
                     
                     var result:[Chatroom] = []
                     for d in data {
@@ -221,8 +235,8 @@ class SomaliDB {
                             let name = d["name"] as! String
                             let createdAt = d["createdAt"] as! String
                             
-                            let obj = Chatroom(name: name,createdAt: createdAt)
-                            obj.setId(id: id)
+                            let obj = Chatroom(id: id,fields: ["name":name,"createdAt":createdAt])
+
                             // メンバー
                             let members = d["members"] as! [NSDictionary]
                             self.setMembers(obj: obj, members:members )
@@ -238,68 +252,124 @@ class SomaliDB {
                 }
                 else{
                     print("Error with response")
-                    self.callbackError(response:response,callback: callback as! (Any?, Error?) -> Void)
+                    callback(nil,self.createError(response:response))
                 }
         }
     }
     
     //メンバーを設定する
     private func setMembers(obj: Chatroom, members:[NSDictionary]){
-        print("members -----")
-        print("\(members)")
+        //print("setMembers -----")
+        //print("\(members)")
         
         members.forEach({ (m) in
+            //print("m \(m)")
             let id = m["_id"] as! String
             let name = m["name"] as! String
             let createdAt = m["createdAt"] as! String
-            var memberType:Member.MemberType = Member.MemberType.OWNER
-            if let serialCode = m["serialCode"] {
-                //Device
-                memberType = Member.MemberType.DEVICE
-            }
             
-            let member = Member(name:name,createdAt:createdAt,memberType:memberType)
-            member.id = id
-            obj.members.append(member)
-        });     
+            if m["serialCode"] != nil {
+                //Device
+                let member = Member(id: id,fields: ["name":name,"createdAt":createdAt,"memberType":MemberType.DEVICE.rawValue])
+                obj.members.append(member)
+            }
+            else{
+                //Owner
+                let member = Member(id: id,fields: ["name":name,"createdAt":createdAt,"memberType":MemberType.OWNER.rawValue])
+                obj.members.append(member)
+            }
+        });
     }
     
     private func setMessages(obj:Chatroom, messages:[NSDictionary]){
-        print("messages -----")
-        print("\(messages)")
+        //print("messages -----")
+        //print("\(messages)")
         
         messages.forEach({ (m) in
             
             let from = m["from"] as! NSDictionary
-            print("from")
-            print("\(from)")
+            //print("from")
+            //print("\(from)")
             
             var member:Member?
-            if let d = from["device"] {
-                let device = d as! NSDictionary
-                let name = device["name"] as! String
-                let createdAt = device["createdAt"] as! String
-                member = Member(name:name, createdAt:createdAt, memberType:Member.MemberType.DEVICE)
-            }
-            else if let o = from["owner"] {
-                let owner = o as! NSDictionary
-                let name = owner["name"] as! String
-                let createdAt = owner["createdAt"] as! String
-                member = Member(name:name,createdAt:createdAt,memberType:Member.MemberType.OWNER)
-            }
+            let name = from["name"] as! String
+            let createdAt = from["createdAt"] as! String
+            let serialCode = from["serialCode"]
             
-            print("member")
-            print("\(member)")
+            var memberType:MemberType = MemberType.OWNER
+            if let serialCode = serialCode{
+                if serialCode as! String != "nil" {
+                    memberType = MemberType.DEVICE
+                }
+            }
+            //print("memberType \(memberType.rawValue)")
+
+            member = Member(id: NSUUID().uuidString,fields: ["name":name,"createdAt":createdAt,"memberType":memberType.rawValue])
+
+            //print("member")
+            //print("\(member)")
             if let f = member {
                 let value = m["value"] as! String
+                let type = m["type"] as! String
                 let createdAt = m["createdAt"] as! String
-                let msg = Message(from:f, type:Message.MessageType.TEXT, value:value, createdAt:createdAt)
-                print("append msg")
-                print("\(msg)")
+                let msg = Message(id: NSUUID().uuidString,fields: ["from":f,"value":value,"createdAt":createdAt,"type":type])
                 
                 obj.messages.append(msg)
             }
         })
     }
     
+    //ルームにメッセージを追加
+    public func putChatroomMessage(roomId:String,message:Message){
+        print("posttChatroomMessage")
+        
+        let url = "\(self.apiProtocol)://\(self.apiHost)\(API_CHAT_ROOMS)/\(roomId)/messages"
+        print("\(url)")
+        
+        let params = ["message":["_id":message._id!,
+                                 "from":message.from?.toJSON(),
+                                 "type":message.type!,
+                                 "value":message.value!,
+                                 "createdAt":message.createdAt!]];
+        print("params \(params)")
+        Alamofire.request(url, method: .put, parameters: params)
+            .responseJSON { response in
+                //let json = response.result.value as! NSDictionary
+                
+        }
+    }
+    
+    //ブロードキャスト一覧を取得
+    func getBroadcastMessages(callback:@escaping ([BroadcastMessage]?,Error?)->Void){
+        //broadcast_message
+        let url = "\(self.apiProtocol)://\(self.apiHost)\(API_BROADCAST_MESSAGES)"
+        print("\(url)")
+        Alamofire.request(url, method: .get, parameters: nil)
+            .responseJSON { response in
+                
+                let json = response.result.value as! NSDictionary
+                
+                if let data = json["data"] as? NSArray {
+                    //print(data)
+                    
+                    var result:[BroadcastMessage] = []
+                    for d in data {
+                        if let d = d as? NSDictionary{
+                            let id = d["_id"] as! String
+                            let name = d["name"] as! String
+                            let value = d["value"] as! String
+                            let createdAt = d["createdAt"] as! String
+                            
+                            let broadcastMessage = BroadcastMessage(id:id,fields:["name":name,"value": value,"createdAt":createdAt])
+                            result.append(broadcastMessage)
+                        }
+                    }
+                    callback(result,nil)
+                }
+                else{
+                    print("Error with response")
+                    callback(nil,self.createError(response:response))
+                }
+        }
+    }
 }

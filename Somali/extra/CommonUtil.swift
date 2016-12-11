@@ -8,6 +8,8 @@
 
 import Foundation
 import UIKit
+import AVFoundation
+import AudioToolbox
 
 extension DispatchQueue {
     class func mainSyncSafe(execute work: () -> Void) {
@@ -51,5 +53,17 @@ class CommonUtil {
      */
     static func instantiateViewController(storyboard:UIStoryboard,identifier:String) -> UIViewController? {
         return storyboard.instantiateViewController(withIdentifier: identifier)
+    }
+    
+    //アラーム音を鳴らす
+    static func playAlarm(fileName:String){
+        if let soundURL = Bundle.main.url(forResource: fileName, withExtension: "wav") {
+            var mySound: SystemSoundID = 0
+            AudioServicesCreateSystemSoundID(soundURL as CFURL, &mySound)
+            // Play
+            AudioServicesPlaySystemSound(mySound);
+            //振動させてみる
+            AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
+        }
     }
 }

@@ -10,9 +10,9 @@ import Foundation
 import UIKit
 
 class ChatroomViewController:UIViewController, UITableViewDelegate, UITableViewDataSource{
-    let somaliDB:SomaliDB = SomaliDB()
+    let somaliDB:SomaliDB = SomaliDB(apiProtocol: Config.API_PROTOCOL,apiHost: Config.API_HOST)
     
-    var device:Device?
+    var device:Member?
     
     var chatrooms:[Chatroom] = []
     var nextVc:ChatViewController?
@@ -34,7 +34,7 @@ class ChatroomViewController:UIViewController, UITableViewDelegate, UITableViewD
     
     //チャットルーム一覧をロードする
     func reloadData(){
-        somaliDB.getChatrooms { (chatrooms, error) in
+        somaliDB.getChatrooms(serialCode:(device?.serialCode)!) { (chatrooms, error) in
             print("chatrooms \(chatrooms)")
             if let e = error {
                 print("error \(e)")
@@ -51,7 +51,7 @@ class ChatroomViewController:UIViewController, UITableViewDelegate, UITableViewD
     }
     
     //選択したデバイスを設定
-    func setDevice(device:Device){
+    func setDevice(device:Member){
         self.device = device
     }
     

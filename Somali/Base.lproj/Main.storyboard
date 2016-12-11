@@ -26,7 +26,7 @@
                                         <rect key="frame" x="0.0" y="92" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yf0-xg-r3l" id="ogU-UE-HWx">
-                                            <frame key="frameInset" width="375" height="79"/>
+                                            <frame key="frameInset" width="375" height="80"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QPM-xd-wDT">
@@ -84,7 +84,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="NFk-tz-ECO" secondAttribute="trailing" constant="10" id="hMc-Vj-kIj"/>
                             <constraint firstItem="8GF-rt-mXK" firstAttribute="top" secondItem="NFk-tz-ECO" secondAttribute="bottom" constant="10" id="poU-9a-vis"/>
                             <constraint firstItem="8GF-rt-mXK" firstAttribute="top" secondItem="Jos-rb-Q7P" secondAttribute="bottom" id="xR6-HJ-J8e"/>
-                            <constraint firstItem="Jos-rb-Q7P" firstAttribute="top" secondItem="TK8-q9-8KM" secondAttribute="bottom" id="yO4-nO-51x"/>
+                            <constraint firstItem="Jos-rb-Q7P" firstAttribute="top" secondItem="TK8-q9-8KM" secondAttribute="bottom" constant="-64" id="yO4-nO-51x"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="デバイス" id="pzh-MJ-ltl"/>
@@ -94,7 +94,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Z5-sC-Poh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="145" y="-208"/>
+            <point key="canvasLocation" x="144.80000000000001" y="-208.24587706146929"/>
         </scene>
         <!--ChatroomView-->
         <scene sceneID="x7b-Ss-iEg">
