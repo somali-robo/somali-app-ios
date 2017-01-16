@@ -27,17 +27,6 @@ class DeviceViewController:UIViewController, UITableViewDelegate, UITableViewDat
 
         //一覧をロード
         reloadData()
-        
-        /*
-         //オーナー の詳細を取得してみる
-         let owner:Owner = Owner(id: "2JBzcaTzKSd6iyFZM",name: "",createdAt: "")
-         self.somaliDB.getOwner(owner:owner) { (owner, error) in
-         if let e = error {
-         print("error \(e)")
-         return;
-         }
-         print("owner \(owner)")
-         }*/
     }
     
     //デバイス一覧をロードする

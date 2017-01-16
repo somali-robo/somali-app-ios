@@ -12,6 +12,7 @@ enum MessageType: String {
     case TEXT = "text"
     case WAV = "wav"
     case ALERT = "alert"
+    case BGM = "bgm"
 }
 
 class Message {

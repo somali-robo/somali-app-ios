@@ -26,7 +26,10 @@ class SomaliDB {
     
     //エラーをコールバックする
     private func createError(response:DataResponse<Any>) -> Error{
-        let statusCode = response.response?.statusCode
+        var statusCode = response.response?.statusCode
+        if statusCode == nil {
+            statusCode = 0
+        }
         let msg = response.result.value
         print("code:\(statusCode) \(msg)")
         return NSError(domain: "com.ux-xu.Somali", code: statusCode!, userInfo: ["NSLocalizedDescriptionKey":msg])
@@ -37,6 +40,12 @@ class SomaliDB {
     open func getMessages(_ callback:@escaping (Dictionary<String,AnyObject>?,Error?)->Void){
         Alamofire.request(API_MESSAGES)
             .responseJSON { response in
+                if response.result.isFailure {
+                    //データ取得に失敗
+                    callback(nil,self.createError(response:response))
+                    return
+                }
+                
                 if let JSON = response.result.value {
                     print("JSON \(JSON)")
                     callback(JSON as? Dictionary<String,AnyObject>,nil)
@@ -56,6 +65,11 @@ class SomaliDB {
         print("\(url)")
         Alamofire.request(url, method: .get, parameters: nil)
             .responseJSON { response in
+                if response.result.isFailure {
+                    //データ取得に失敗
+                    callback(nil,self.createError(response:response))
+                    return
+                }
                 
                 let json = response.result.value as! NSDictionary
                 
@@ -93,6 +107,12 @@ class SomaliDB {
         print("url \(url)")
         Alamofire.request(url, method: .get, parameters: nil)
             .responseJSON { response in
+                if response.result.isFailure {
+                    //データ取得に失敗
+                    callback(nil,self.createError(response:response))
+                    return
+                }
+                
                 let json = response.result.value as! NSDictionary
                 
                 if let d = json["data"] as? NSDictionary {
@@ -123,6 +143,12 @@ class SomaliDB {
         
         Alamofire.request(url, method: .put, parameters: params)
             .responseJSON { response in
+                if response.result.isFailure {
+                    //データ取得に失敗
+                    callback(nil,self.createError(response:response))
+                    return
+                }
+                
                 let json = response.result.value as! NSDictionary
                 //print(json)
                 
@@ -150,6 +176,12 @@ class SomaliDB {
         let url = "\(self.apiHost)\(API_OWNERS)/\(owner._id)"
         Alamofire.request(url, method: .get, parameters: nil)
             .responseJSON { response in
+                if response.result.isFailure {
+                    //データ取得に失敗
+                    callback(nil,self.createError(response:response))
+                    return
+                }
+                
                 let json = response.result.value as! NSDictionary
                 
                 if let data = json["data"] as? NSArray {
@@ -179,6 +211,12 @@ class SomaliDB {
         
         Alamofire.request(url, method: .get, parameters: nil)
             .responseJSON { response in
+                if response.result.isFailure {
+                    //データ取得に失敗
+                    callback(nil,self.createError(response:response))
+                    return
+                }
+                
                 let json = response.result.value as! NSDictionary
                 //print("json -----")
                 //print("\(json)")
@@ -218,6 +256,12 @@ class SomaliDB {
         
         Alamofire.request(url, method: .get, parameters: nil)
             .responseJSON { response in
+                if response.result.isFailure {
+                    //データ取得に失敗
+                    callback(nil,self.createError(response:response))
+                    return
+                }
+                
                 let json = response.result.value as! NSDictionary
                 //print("json -----")
                 //print("\(json)")
@@ -281,9 +325,12 @@ class SomaliDB {
     
     private func setMessages(obj:Chatroom, messages:[NSDictionary]){
         print("setMessages -----")
-        //print("\(messages)")
+        print("\(messages)")
         
         messages.forEach({ (m) in
+            if m["from"] as? String == "" {
+                return
+            }
             
             let from = m["from"] as! NSDictionary
 
@@ -325,7 +372,7 @@ class SomaliDB {
         print("\(url)")
         
         let params = ["message":["_id":message._id!,
-                                 "from":message.from?.toJSON(),
+                                 "from":(message.from?.toJSON())!,
                                  "type":message.type!,
                                  "value":message.value!,
                                  "createdAt":message.createdAt!]];
@@ -344,6 +391,11 @@ class SomaliDB {
         print("\(url)")
         Alamofire.request(url, method: .get, parameters: nil)
             .responseJSON { response in
+                if response.result.isFailure {
+                    //データ取得に失敗
+                    callback(nil,self.createError(response:response))
+                    return
+                }
                 
                 let json = response.result.value as! NSDictionary
                 

@@ -39,17 +39,23 @@ class ChatViewController: JSQMessagesViewController {
     //表示済みのMessage ID一覧
     var dispMessageIds:[String] = []
     
-    //表示済みの一斉送信メッセージID
-    var dispBroadcastMessageIds:[String] = []
-    
     var _view:UIView? = nil
     
     var timer:Timer?
+    
+    //BGM再生 メニューボタン
+    var btnBgmPlay: UIBarButtonItem?
+    var btnBgmPause: UIBarButtonItem?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         print("viewDidLoad")
 
+        //ナビゲーションバーの右側にボタン付与
+        btnBgmPlay = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.play, target: self, action: #selector(ChatViewController.clickBgmButton))
+        btnBgmPause = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.pause, target: self, action: #selector(ChatViewController.clickBgmButton))
+        self.navigationItem.setRightBarButtonItems([btnBgmPlay!], animated: true)
+        
         //画面タイトルを空にする
         self.title = ""
         
@@ -60,7 +66,7 @@ class ChatViewController: JSQMessagesViewController {
         let createdAt = DateUtils.stringFromDate(date: NSDate(), format: "yyyy-MM-ddTHH:mm:ssZ")
         owner = Member(id:self.fromId!,fields: ["name":senderDisplayName,"createdAt":createdAt])
         
-        //TODO: チャットルームに オーナーを追加して更新
+        //チャットルームに オーナーを追加して更新
         self.chatroom?.members.append(owner!)
         
         let bubbleFactory = JSQMessagesBubbleImageFactory()
@@ -75,7 +81,7 @@ class ChatViewController: JSQMessagesViewController {
 
         //ポーリングでチャットルームのメッセージを監視する
         self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: BlockOperation(block: {
-            print("Timer event")
+            //print("Timer event")
             //チャットルーム
             self.somaliDB.getChatroom(roomId:(self.chatroom?._id)!) { (chatroom, error) in
                 if let e = error {
@@ -104,12 +110,15 @@ class ChatViewController: JSQMessagesViewController {
                 }
                 //メッセージ件数に変更があるか確認
                 if(self.broadcastMessageCnt < (messages?.count)!){
-                    self.setChatroom(broadcastMessage: messages!)
+                    //self.setChatroom(broadcastMessage: messages!)
                     self.broadcastMessageCnt = (messages?.count)!
                 }
             }
         }), selector: #selector(Operation.main), userInfo: nil, repeats: true)
 
+        //チャット欄を開いた時 BGMはOFFにする
+        self.putChatroomMessageBgm(isPlay: false)
+        
         //初期化終了時に view を設定
         self._view = self.view;
     }
@@ -208,8 +217,8 @@ class ChatViewController: JSQMessagesViewController {
         self.chatroom = chatroom
         
         //メッセージの初期値として設定する
-        self.messageCnt = chatroom.messages.count
-        chatroom.messages.forEach({ (elem) in
+        var messages = chatroom.messages
+        messages.forEach({ (elem) in
             //print("elem ----")
             
             let senderId:String = (elem.from?.memberType)!
@@ -230,23 +239,6 @@ class ChatViewController: JSQMessagesViewController {
         })
     }
     
-    //チャットルームを設定
-    func setChatroom(broadcastMessage: [BroadcastMessage]) {
-        //print("setChatroom broadcastMessage:\(broadcastMessage)")
-        
-        broadcastMessage.forEach({ (elem) in
-            //差分だけ画面に追加
-            let msgId = (elem._id)!
-            var searchArray = [String]()
-            searchArray = dispBroadcastMessageIds.filter{$0.localizedCaseInsensitiveContains(msgId)}
-            if searchArray.count == 0 {
-                addMessage(senderId:MemberType.SYSTEM.rawValue,msg:elem)
-                dispBroadcastMessageIds.append(msgId)
-            }
-        })
-
-    }
-    
     @IBAction func clickBtnBack(_ sender: AnyObject) {
         print("clickBtnBack")
         
@@ -263,7 +255,11 @@ class ChatViewController: JSQMessagesViewController {
     override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
         print("didPressSend")
         
-        let createdAt = DateUtils.stringFromDate(date: NSDate(), format: "yyyy-MM-ddTHH:mm:ssZ")
+        inputToolbar.contentView.textView.text = ""
+        // キーボードを閉じる
+        inputToolbar.contentView.textView.resignFirstResponder()
+        
+        let createdAt = DateUtils.stringFromDate(date: NSDate(), format: "yyyy-MM-ddTHH:mm:ss")
         let message = Message(id:NSUUID().uuidString,fields:["from": owner!,"type": MessageType.TEXT.rawValue,"value":text,"createdAt": createdAt])
         
         //感情認識APIのテスト
@@ -272,8 +268,9 @@ class ChatViewController: JSQMessagesViewController {
         print("message \(message)")
         
         self.somaliDB.putChatroomMessage(roomId: (self.chatroom?._id!)!,message:message)
+        
     }
-    
+
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageDataForItemAt indexPath: IndexPath!) -> JSQMessageData! {
         return self.messages[indexPath.item]
     }
@@ -327,6 +324,33 @@ class ChatViewController: JSQMessagesViewController {
     
         //アラート音を鳴らす
         CommonUtil.playAlarm(fileName: "alert01")
+    }
+    
+    //BGM再生,停止
+    var isPlayBgm = false
+    func clickBgmButton(){
+        print("clickBgmButton")
+        //BGM再生,停止
+        self.putChatroomMessageBgm(isPlay: !isPlayBgm)
+    }
+    
+    func putChatroomMessageBgm(isPlay:Bool){
+        var value = "on"
+        if isPlay == false {
+            value = "off"
+            self.navigationItem.setRightBarButtonItems([btnBgmPause!], animated: true)
+        }
+        else if isPlay == true {
+            value = "on"
+            self.navigationItem.setRightBarButtonItems([btnBgmPlay!], animated: true)
+        }
+        isPlayBgm = isPlay
+        
+        let createdAt = DateUtils.stringFromDate(date: NSDate(), format: "yyyy-MM-ddTHH:mm:ss")
+        let message = Message(id:NSUUID().uuidString,fields:["from": owner!,"type": MessageType.BGM.rawValue,"value":value,"createdAt": createdAt])
+        print("message \(message)")
+        
+        self.somaliDB.putChatroomMessage(roomId: (self.chatroom?._id!)!,message:message)
     }
 }
 
