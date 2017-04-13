@@ -143,6 +143,7 @@ class DeviceViewController:UIViewController, UITableViewDelegate, UITableViewDat
         return cell
     }
     
+    
     //画面移動
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         print("prepare")
@@ -150,6 +151,14 @@ class DeviceViewController:UIViewController, UITableViewDelegate, UITableViewDat
             //チャットルーム画面へ遷移させる
             self.nextVc = (segue.destination as? ChatroomViewController)!
             print("nextVc \(self.nextVc)")
+        }
+    }
+    
+    override func didMove(toParentViewController parent: UIViewController?) {
+        if !(parent?.isEqual(self.nextVc))! {
+            print("Back button pressed")
+            //一覧を更新
+            self.reloadData()
         }
     }
     

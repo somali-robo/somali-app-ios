@@ -19,8 +19,15 @@ class ChatroomViewController:UIViewController, UITableViewDelegate, UITableViewD
     
     @IBOutlet weak var tableView: UITableView!
     
+    //デバイス削除ボタン
+    var btnDeviceDelete: UIBarButtonItem?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //デバイス削除ボタン
+        btnDeviceDelete = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.trash, target: self, action: #selector(ChatroomViewController.clickBtnDeviceDelete))
+        self.navigationItem.setRightBarButtonItems([btnDeviceDelete!], animated: true)
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -86,5 +93,52 @@ class ChatroomViewController:UIViewController, UITableViewDelegate, UITableViewD
         self.nextVc?.fromId = "QkrZARioaGobLvNa8"
     }
     
+    //デバイス削除処理
+    func clickBtnDeviceDelete(){
+        print("clickBtnDeviceDelete")
+        let confirmAlert: UIAlertController = UIAlertController(title: "確認", message: "デバイスを初期化しますが、よろしいですか？", preferredStyle:  UIAlertControllerStyle.alert)
+        let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler:{
+            (action: UIAlertAction!) -> Void in
+            print("OK")
+            //デバイス削除処理
+            self.somaliDB.getChatrooms(serialCode:(self.device?.serialCode)!) { (chatrooms, error) in
+                print("chatrooms \(chatrooms)")
+                if let e = error {
+                    print("error \(e)")
+                    return;
+                }
+                for chatroom in chatrooms! {
+                    self.somaliDB.deleteChatroom(roomId: chatroom._id!, callback: { (result, err) in
+                        print("deleteChatroom \(result) \(err)")
+                    })
+                }
+            }
+            
+            print("device \(self.device)")
+            self.somaliDB.deleteDevice(device: self.device!, callback: { (result, err) in
+                print("deleteDevice \(result) \(err)")
+              
+                //削除後にデバイスの電源を入れ直すアラートを表示
+                let alert: UIAlertController = UIAlertController(title: "確認", message: "デバイスを初期化しました。電源を入れ直してください", preferredStyle:  UIAlertControllerStyle.alert)
+                let btnOkAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler:{
+                    (action: UIAlertAction!) -> Void in
+                    //一覧をリロード
+                    self.reloadData()
+                    
+                    //TODO デバイス一覧に戻ってリロード
+                })
+                alert.addAction(btnOkAction)
+                self.present(alert, animated: true, completion: nil)
+            })
+        })
+        let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: UIAlertActionStyle.cancel, handler:{
+            (action: UIAlertAction!) -> Void in
+            print("Cancel")
+        })
+        confirmAlert.addAction(cancelAction)
+        confirmAlert.addAction(defaultAction)
+        
+        present(confirmAlert, animated: true, completion: nil)
+    }
     
 }

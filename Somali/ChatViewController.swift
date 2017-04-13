@@ -43,19 +43,10 @@ class ChatViewController: JSQMessagesViewController {
     
     var timer:Timer?
     
-    //BGM再生 メニューボタン
-    var btnBgmPlay: UIBarButtonItem?
-    var btnBgmPause: UIBarButtonItem?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("viewDidLoad")
 
-        //ナビゲーションバーの右側にボタン付与
-        btnBgmPlay = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.play, target: self, action: #selector(ChatViewController.clickBgmButton))
-        btnBgmPause = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.pause, target: self, action: #selector(ChatViewController.clickBgmButton))
-        self.navigationItem.setRightBarButtonItems([btnBgmPlay!], animated: true)
-        
         //画面タイトルを空にする
         self.title = ""
         
@@ -116,9 +107,6 @@ class ChatViewController: JSQMessagesViewController {
             }
         }), selector: #selector(Operation.main), userInfo: nil, repeats: true)
 
-        //チャット欄を開いた時 BGMはOFFにする
-        self.putChatroomMessageBgm(isPlay: false)
-        
         //初期化終了時に view を設定
         self._view = self.view;
     }
@@ -217,7 +205,7 @@ class ChatViewController: JSQMessagesViewController {
         self.chatroom = chatroom
         
         //メッセージの初期値として設定する
-        var messages = chatroom.messages
+        let messages = chatroom.messages
         messages.forEach({ (elem) in
             //print("elem ----")
             
@@ -237,6 +225,15 @@ class ChatViewController: JSQMessagesViewController {
                 dispMessageIds.append(msgId)
             }
         })
+    }
+    
+    //画面移動
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "segueBgm") {
+            //BGM画面へ遷移させる
+            (segue.destination as? BgmViewController)!.setOwner(owner: owner!)
+            (segue.destination as? BgmViewController)!.setRoomId(roomId: (self.chatroom?._id)!)
+        }
     }
     
     @IBAction func clickBtnBack(_ sender: AnyObject) {
@@ -326,31 +323,5 @@ class ChatViewController: JSQMessagesViewController {
         CommonUtil.playAlarm(fileName: "alert01")
     }
     
-    //BGM再生,停止
-    var isPlayBgm = false
-    func clickBgmButton(){
-        print("clickBgmButton")
-        //BGM再生,停止
-        self.putChatroomMessageBgm(isPlay: !isPlayBgm)
-    }
-    
-    func putChatroomMessageBgm(isPlay:Bool){
-        var value = "on"
-        if isPlay == false {
-            value = "off"
-            self.navigationItem.setRightBarButtonItems([btnBgmPause!], animated: true)
-        }
-        else if isPlay == true {
-            value = "on"
-            self.navigationItem.setRightBarButtonItems([btnBgmPlay!], animated: true)
-        }
-        isPlayBgm = isPlay
-        
-        let createdAt = DateUtils.stringFromDate(date: NSDate(), format: "yyyy-MM-ddTHH:mm:ss")
-        let message = Message(id:NSUUID().uuidString,fields:["from": owner!,"type": MessageType.BGM.rawValue,"value":value,"createdAt": createdAt])
-        print("message \(message)")
-        
-        self.somaliDB.putChatroomMessage(roomId: (self.chatroom?._id!)!,message:message)
-    }
 }
 

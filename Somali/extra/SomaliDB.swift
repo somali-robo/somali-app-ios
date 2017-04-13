@@ -18,6 +18,7 @@ class SomaliDB {
     let API_CHAT_ROOMS:String = "/api/chat_rooms"
     let API_MESSAGES:String = "/api/messages"
     let API_BROADCAST_MESSAGES = "/api/broadcast_messages"
+    let API_BGMS = "/api/bgms"
     
     //コンストラクタ
     init(apiHost:String){
@@ -127,6 +128,31 @@ class SomaliDB {
                     result = Member(id: id,fields: ["serialCode": serialCode,"name":name,"createdAt":createdAt])
                     
                     callback(result,nil)
+                }
+                else{
+                    print("Error with response")
+                    callback(nil,self.createError(response:response))
+                }
+        }
+    }
+    
+    //デバイス削除
+    func deleteDevice(device:Member, callback:@escaping (NSDictionary?,Error?)->Void){
+        let url = "\(self.apiHost)\(API_DEVICES)/\(device._id!)"
+        print("url \(url)")
+        Alamofire.request(url, method: .delete, parameters: nil)
+            .responseJSON { response in
+                if response.result.isFailure {
+                    //データ削除にしっぱい
+                    callback(nil,self.createError(response:response))
+                    return
+                }
+                
+                let json = response.result.value as! NSDictionary
+                
+                if let d = json["data"] as? NSDictionary {
+                    print(d)
+                    callback(d,nil)
                 }
                 else{
                     print("Error with response")
@@ -299,6 +325,37 @@ class SomaliDB {
         }
     }
     
+    
+    //チャットルーム削除
+    func deleteChatroom(roomId:String,callback:@escaping (NSDictionary?,Error?)->Void){
+        ///api/chat_rooms/members/device/:serialCode
+        let url = "\(self.apiHost)\(API_CHAT_ROOMS)/\(roomId)"
+        print("\(url)")
+        
+        Alamofire.request(url, method: .delete, parameters: nil)
+            .responseJSON { response in
+                if response.result.isFailure {
+                    //データ取得に失敗
+                    callback(nil,self.createError(response:response))
+                    return
+                }
+                
+                let json = response.result.value as! NSDictionary
+                //print("json -----")
+                //print("\(json)")
+                
+                if let data = json["data"] as? NSDictionary {
+                    //print("data -----")
+                    //print(data)
+                    callback(data,nil)
+                }
+                else{
+                    print("Error with response")
+                    callback(nil,self.createError(response:response))
+                }
+        }
+    }
+    
     //メンバーを設定する
     private func setMembers(obj: Chatroom, members:[NSDictionary]){
         //print("setMembers -----")
@@ -324,8 +381,8 @@ class SomaliDB {
     }
     
     private func setMessages(obj:Chatroom, messages:[NSDictionary]){
-        print("setMessages -----")
-        print("\(messages)")
+        //print("setMessages -----")
+        //print("\(messages)")
         
         messages.forEach({ (m) in
             if m["from"] as? String == "" {
@@ -411,6 +468,47 @@ class SomaliDB {
                             let createdAt = d["createdAt"] as! String
                             
                             let broadcastMessage = BroadcastMessage(id:id,fields:["name":name,"value": value,"createdAt":createdAt])
+                            result.append(broadcastMessage)
+                        }
+                    }
+                    callback(result,nil)
+                }
+                else{
+                    print("Error with response")
+                    callback(nil,self.createError(response:response))
+                }
+        }
+    }
+    
+    /** BGM一覧
+     *
+     */
+    func getBgms(callback:@escaping ([Bgm]?,Error?)->Void){
+        //broadcast_message
+        let url = "\(self.apiHost)\(API_BGMS)"
+        print("\(url)")
+        Alamofire.request(url, method: .get, parameters: nil)
+            .responseJSON { response in
+                if response.result.isFailure {
+                    //データ取得に失敗
+                    callback(nil,self.createError(response:response))
+                    return
+                }
+                
+                let json = response.result.value as! NSDictionary
+                
+                if let data = json["data"] as? NSArray {
+                    //print(data)
+                    
+                    var result:[Bgm] = []
+                    for d in data {
+                        if let d = d as? NSDictionary{
+                            let id = d["_id"] as! String
+                            let name = d["name"] as! String
+                            let fileName = d["fileName"] as! String
+                            let createdAt = d["createdAt"] as! String
+                            
+                            let broadcastMessage = Bgm(id:id,fields:["name":name,"fileName": fileName,"createdAt":createdAt])
                             result.append(broadcastMessage)
                         }
                     }

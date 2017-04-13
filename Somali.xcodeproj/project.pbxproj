@@ -20,6 +20,9 @@
 		455A49DF1DF998D9002AD748 /* AlertViewController_iPhone6Plus.xib in Resources */ = {isa = PBXBuildFile; fileRef = 455A49DB1DF998D9002AD748 /* AlertViewController_iPhone6Plus.xib */; };
 		455A49E01DF998D9002AD748 /* AlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 455A49DC1DF998D9002AD748 /* AlertViewController.xib */; };
 		455A49E61DF9A128002AD748 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 455A49E51DF9A128002AD748 /* AVFoundation.framework */; };
+		457A41121E4A29A6008A6130 /* BgmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457A41111E4A29A6008A6130 /* BgmViewController.swift */; };
+		457A41141E4A2A4B008A6130 /* BgmTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457A41131E4A2A4B008A6130 /* BgmTableCell.swift */; };
+		458854591E41B4AE00A7126F /* Bgm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458854581E41B4AE00A7126F /* Bgm.swift */; };
 		45AF1D8A1DFC4092007668B6 /* BroadcastMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AF1D891DFC4092007668B6 /* BroadcastMessage.swift */; };
 		45B394B51DD170D2001E75A2 /* DeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B394B41DD170D2001E75A2 /* DeviceViewController.swift */; };
 		45B394B71DD17137001E75A2 /* ChatroomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B394B61DD17137001E75A2 /* ChatroomViewController.swift */; };
@@ -51,6 +54,9 @@
 		455A49DB1DF998D9002AD748 /* AlertViewController_iPhone6Plus.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertViewController_iPhone6Plus.xib; sourceTree = "<group>"; };
 		455A49DC1DF998D9002AD748 /* AlertViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertViewController.xib; sourceTree = "<group>"; };
 		455A49E51DF9A128002AD748 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		457A41111E4A29A6008A6130 /* BgmViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BgmViewController.swift; sourceTree = "<group>"; };
+		457A41131E4A2A4B008A6130 /* BgmTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BgmTableCell.swift; sourceTree = "<group>"; };
+		458854581E41B4AE00A7126F /* Bgm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bgm.swift; sourceTree = "<group>"; };
 		45AF1D891DFC4092007668B6 /* BroadcastMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BroadcastMessage.swift; sourceTree = "<group>"; };
 		45B394B41DD170D2001E75A2 /* DeviceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceViewController.swift; sourceTree = "<group>"; };
 		45B394B61DD17137001E75A2 /* ChatroomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatroomViewController.swift; sourceTree = "<group>"; };
@@ -122,6 +128,8 @@
 				45B394B61DD17137001E75A2 /* ChatroomViewController.swift */,
 				450B37BB1DD312A40092A3ED /* ChatroomTableCell.swift */,
 				45B394B81DD1715B001E75A2 /* ChatViewController.swift */,
+				457A41131E4A2A4B008A6130 /* BgmTableCell.swift */,
+				457A41111E4A29A6008A6130 /* BgmViewController.swift */,
 				4526FDB51DC64D0C005F2DFA /* Info.plist */,
 				4526FDC21DC6509F005F2DFA /* Somali-Bridging-Header.h */,
 				45B4998A1DE6D75B0038D9D3 /* Config.swift */,
@@ -159,6 +167,7 @@
 				451363771DD5718E00398920 /* Intonation.swift */,
 				45577BEB1DF1F22900621991 /* Document.swift */,
 				45AF1D891DFC4092007668B6 /* BroadcastMessage.swift */,
+				458854581E41B4AE00A7126F /* Bgm.swift */,
 			);
 			path = db;
 			sourceTree = "<group>";
@@ -307,11 +316,14 @@
 				45B394E41DD19C7E001E75A2 /* CommonUtil.swift in Sources */,
 				45B394E81DD1A128001E75A2 /* Member.swift in Sources */,
 				45B4998B1DE6D75B0038D9D3 /* Config.swift in Sources */,
+				457A41141E4A2A4B008A6130 /* BgmTableCell.swift in Sources */,
+				457A41121E4A29A6008A6130 /* BgmViewController.swift in Sources */,
 				450B37BC1DD312A40092A3ED /* ChatroomTableCell.swift in Sources */,
 				4526FDAA1DC64D0C005F2DFA /* AppDelegate.swift in Sources */,
 				45B394DE1DD19C20001E75A2 /* Message.swift in Sources */,
 				450B37B61DD2E9AC0092A3ED /* DeviceTableCell.swift in Sources */,
 				45AF1D8A1DFC4092007668B6 /* BroadcastMessage.swift in Sources */,
+				458854591E41B4AE00A7126F /* Bgm.swift in Sources */,
 				45B394E11DD19C75001E75A2 /* SomaliDB.swift in Sources */,
 				450B37B81DD30AAE0092A3ED /* Chatroom.swift in Sources */,
 				45577BEC1DF1F22900621991 /* Document.swift in Sources */,
@@ -385,10 +397,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "47876523-4e35-48d8-859d-f46edb637e3c";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -417,8 +429,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = NER58PY4N6;
@@ -432,9 +444,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "47876523-4e35-48d8-859d-f46edb637e3c";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;

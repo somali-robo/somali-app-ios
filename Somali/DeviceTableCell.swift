@@ -21,11 +21,6 @@ class DeviceTableCell:UITableViewCell {
         super.awakeFromNib()
         self.contentView.isUserInteractionEnabled = false
     }
-    /*
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
-    */
     
     func setCell(device :Member) {
         self.serialCode.text = device.serialCode
